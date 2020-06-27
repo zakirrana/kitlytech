@@ -16,9 +16,9 @@ namespace KitelyTechWebApi.Controllers
         private SiteRepository siterepo = new SiteRepository();
         public string GetStudiesBySite(int siteId, string search, int from, int to)
         {
-            
-          
-            var result = new DataServiceResult<List<StudyList>>();
+
+
+            var result = new DataServiceResult<List<StudyModel>>();
             try
             {
                 var data = siterepo.GeStudiesBySiteId(siteId, search, from, to);
@@ -37,5 +37,28 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
-    }
+            public string GetReferalsByStudy(int siteId,int studyId, string search, int from, int to)
+            {
+
+
+                var result = new DataServiceResult<List<ReferalModel>>();
+                try
+                {
+                    var data = siterepo.GeReferalByStudyId(siteId,studyId,search,from,to);
+                    if (data != null)
+                    {
+                        result.Success = true;
+                        result.Value = data;
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    result.Success = false;
+                    result.ExceptionInfo = new ExceptionInfo(ex);
+                }
+                return JsonConvert.SerializeObject(result);
+            }
+        }
 }

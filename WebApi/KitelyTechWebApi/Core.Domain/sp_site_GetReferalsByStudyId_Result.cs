@@ -10,16 +10,17 @@
 namespace Core.Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class StudySiteReferalMapping
+    public partial class sp_site_GetReferalsByStudyId_Result
     {
+        public Nullable<long> Rowno { get; set; }
         public int Id { get; set; }
         public Nullable<int> StudyId { get; set; }
         public Nullable<int> SiteId { get; set; }
         public Nullable<int> RefrelId { get; set; }
         public Nullable<int> ReferalStatusId { get; set; }
-    
-        public virtual Study Study { get; set; }
+        public string ReferalStatus { get; set; }
+        public string IVRNo { get; set; }
+        public string ReferalCode { get; set; }
     }
 }

@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="a43b57261e4041cbb1391596389c6193" Name="Diagram1">
         <EntityTypeShape EntityType="CTMModel.PatientDetail" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CTMModel.PatientReferalMapping" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CTMModel.ReferalApointment" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CTMModel.ReferalPreQualificationDetail" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CTMModel.ReferalStatu" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
@@ -18,16 +17,16 @@
         <EntityTypeShape EntityType="CTMModel.StudySiteReferalMapping" Width="1.5" PointX="15.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CTMModel.StudyStatu" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CTMModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="CTMModel.FK_PatientReferalMapping_PatientDetail" ManuallyRouted="false" />
-        <AssociationConnector Association="CTMModel.FK_PatientReferalMapping_ReferalStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="CTMModel.FK_ReferalApointments_PatientReferalMapping" ManuallyRouted="false" />
-        <AssociationConnector Association="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" ManuallyRouted="false" />
-        <AssociationConnector Association="CTMModel.FK_SiteEventDetail_PatientReferalMapping" ManuallyRouted="false" />
         <AssociationConnector Association="CTMModel.FK_SiteReferalStatusReason_ReferalStatus" ManuallyRouted="false" />
         <AssociationConnector Association="CTMModel.FK_SiteEventDetail_SiteEventType" ManuallyRouted="false" />
         <AssociationConnector Association="CTMModel.FK_Studies_StudyStatus" ManuallyRouted="false" />
         <AssociationConnector Association="CTMModel.FK_StudyProtocol_Studies" ManuallyRouted="false" />
         <AssociationConnector Association="CTMModel.FK_StudySiteReferalMapping_Studies" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CTMModel.PatientReferalMapping" Width="1.5" PointX="3" PointY="3.5" />
+        <AssociationConnector Association="CTMModel.FK_PatientReferalMapping_PatientDetail" />
+        <AssociationConnector Association="CTMModel.FK_ReferalApointments_PatientReferalMapping" />
+        <AssociationConnector Association="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" />
+        <AssociationConnector Association="CTMModel.FK_SiteEventDetail_PatientReferalMapping" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

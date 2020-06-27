@@ -21,5 +21,7 @@ namespace Core.Domain
         public Nullable<int> ModyfiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public string Status { get; set; }
+        public Nullable<long> Rowno { get; set; }
+        public string StudyCode { get; set; }
     }
 }

@@ -16,9 +16,9 @@
       <PropertyRef Name="ReferalId" />
     </Key>
     <Property Name="ReferalId" Type="int" Nullable="false" />
+    <Property Name="ReferalCode" Type="nvarchar" MaxLength="504" StoreGeneratedPattern="Computed" />
     <Property Name="StudyId" Type="int" />
     <Property Name="PatientId" Type="int" />
-    <Property Name="ReferalStatusId" Type="int" />
   </EntityType>
   <EntityType Name="ReferalApointments">
     <Key>
@@ -87,6 +87,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="StudyCode" Type="nvarchar" MaxLength="505" StoreGeneratedPattern="Computed" />
     <Property Name="StudyTitle" Type="nvarchar" MaxLength="500" />
     <Property Name="StatusId" Type="int" />
     <Property Name="CreatedBy" Type="int" />
@@ -110,6 +111,7 @@
     <Property Name="StudyId" Type="int" />
     <Property Name="SiteId" Type="int" />
     <Property Name="RefrelId" Type="int" />
+    <Property Name="ReferalStatusId" Type="int" />
   </EntityType>
   <EntityType Name="StudyStatus">
     <Key>
@@ -137,18 +139,6 @@
       </Principal>
       <Dependent Role="PatientReferalMapping">
         <PropertyRef Name="PatientId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PatientReferalMapping_ReferalStatus">
-    <End Role="ReferalStatus" Type="Self.ReferalStatus" Multiplicity="0..1" />
-    <End Role="PatientReferalMapping" Type="Self.PatientReferalMapping" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ReferalStatus">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PatientReferalMapping">
-        <PropertyRef Name="ReferalStatusId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -248,6 +238,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_site_GetReferalsByStudyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SiteId" Type="int" Mode="In" />
+    <Parameter Name="StudyId" Type="int" Mode="In" />
+    <Parameter Name="Search" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="FromRecord" Type="bigint" Mode="In" />
+    <Parameter Name="ToRecord" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="sp_site_GetStudiesBySiteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SiteID" Type="int" Mode="In" />
     <Parameter Name="Search" Type="nvarchar(max)" Mode="In" />
@@ -270,10 +267,6 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_PatientReferalMapping_PatientDetail" Association="Self.FK_PatientReferalMapping_PatientDetail">
       <End Role="PatientDetail" EntitySet="PatientDetail" />
-      <End Role="PatientReferalMapping" EntitySet="PatientReferalMapping" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PatientReferalMapping_ReferalStatus" Association="Self.FK_PatientReferalMapping_ReferalStatus">
-      <End Role="ReferalStatus" EntitySet="ReferalStatus" />
       <End Role="PatientReferalMapping" EntitySet="PatientReferalMapping" />
     </AssociationSet>
     <AssociationSet Name="FK_ReferalApointments_PatientReferalMapping" Association="Self.FK_ReferalApointments_PatientReferalMapping">

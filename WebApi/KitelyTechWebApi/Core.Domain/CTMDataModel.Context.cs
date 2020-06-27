@@ -28,7 +28,6 @@ namespace Core.Domain
         }
     
         public virtual DbSet<PatientDetail> PatientDetails { get; set; }
-        public virtual DbSet<PatientReferalMapping> PatientReferalMappings { get; set; }
         public virtual DbSet<ReferalApointment> ReferalApointments { get; set; }
         public virtual DbSet<ReferalPreQualificationDetail> ReferalPreQualificationDetails { get; set; }
         public virtual DbSet<ReferalStatu> ReferalStatus { get; set; }
@@ -40,6 +39,7 @@ namespace Core.Domain
         public virtual DbSet<StudySiteReferalMapping> StudySiteReferalMappings { get; set; }
         public virtual DbSet<StudyStatu> StudyStatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<PatientReferalMapping> PatientReferalMappings { get; set; }
     
         public virtual ObjectResult<sp_site_GetStudiesBySiteId_Result> sp_site_GetStudiesBySiteId(Nullable<int> siteID, string search, Nullable<long> fromRecord, Nullable<long> toRecord)
         {
@@ -60,6 +60,31 @@ namespace Core.Domain
                 new ObjectParameter("ToRecord", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetStudiesBySiteId_Result>("sp_site_GetStudiesBySiteId", siteIDParameter, searchParameter, fromRecordParameter, toRecordParameter);
+        }
+    
+        public virtual ObjectResult<sp_site_GetReferalsByStudyId_Result> sp_site_GetReferalsByStudyId(Nullable<int> siteId, Nullable<int> studyId, string search, Nullable<long> fromRecord, Nullable<long> toRecord)
+        {
+            var siteIdParameter = siteId.HasValue ?
+                new ObjectParameter("SiteId", siteId) :
+                new ObjectParameter("SiteId", typeof(int));
+    
+            var studyIdParameter = studyId.HasValue ?
+                new ObjectParameter("StudyId", studyId) :
+                new ObjectParameter("StudyId", typeof(int));
+    
+            var searchParameter = search != null ?
+                new ObjectParameter("Search", search) :
+                new ObjectParameter("Search", typeof(string));
+    
+            var fromRecordParameter = fromRecord.HasValue ?
+                new ObjectParameter("FromRecord", fromRecord) :
+                new ObjectParameter("FromRecord", typeof(long));
+    
+            var toRecordParameter = toRecord.HasValue ?
+                new ObjectParameter("ToRecord", toRecord) :
+                new ObjectParameter("ToRecord", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetReferalsByStudyId_Result>("sp_site_GetReferalsByStudyId", siteIdParameter, studyIdParameter, searchParameter, fromRecordParameter, toRecordParameter);
         }
     }
 }

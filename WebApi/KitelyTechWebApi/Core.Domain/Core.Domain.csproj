@@ -67,7 +67,8 @@
       <DependentUpon>CTMDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CommonAudit.cs" />
-    <Compile Include="Models\StudyList.cs" />
+    <Compile Include="Models\ReferalModel.cs" />
+    <Compile Include="Models\StudyModel.cs" />
     <Compile Include="PatientDetail.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
@@ -94,6 +95,9 @@
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteReferalStatusReason.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_site_GetReferalsByStudyId_Result.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetStudiesBySiteId_Result.cs">

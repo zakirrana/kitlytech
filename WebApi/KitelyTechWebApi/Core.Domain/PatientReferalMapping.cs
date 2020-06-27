@@ -23,12 +23,11 @@ namespace Core.Domain
         }
     
         public int ReferalId { get; set; }
+        public string ReferalCode { get; set; }
         public Nullable<int> StudyId { get; set; }
         public Nullable<int> PatientId { get; set; }
-        public Nullable<int> ReferalStatusId { get; set; }
     
         public virtual PatientDetail PatientDetail { get; set; }
-        public virtual ReferalStatu ReferalStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferalApointment> ReferalApointments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

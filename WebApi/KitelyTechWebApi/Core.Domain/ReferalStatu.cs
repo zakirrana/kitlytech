@@ -17,15 +17,12 @@ namespace Core.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ReferalStatu()
         {
-            this.PatientReferalMappings = new HashSet<PatientReferalMapping>();
             this.SiteReferalStatusReasons = new HashSet<SiteReferalStatusReason>();
         }
     
         public int Id { get; set; }
         public string ReferalStatus { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PatientReferalMapping> PatientReferalMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SiteReferalStatusReason> SiteReferalStatusReasons { get; set; }
     }

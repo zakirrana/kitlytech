@@ -25,7 +25,7 @@ namespace Core.Domain
         public Nullable<int> ApplicableProtocolid { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
     
-        public virtual PatientReferalMapping PatientReferalMapping { get; set; }
         public virtual SiteEventType SiteEventType { get; set; }
+        public virtual PatientReferalMapping PatientReferalMapping { get; set; }
     }
 }
