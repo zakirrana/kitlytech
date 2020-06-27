@@ -1,0 +1,11 @@
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\Core.Domain.dll.config
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\Core.Domain.dll
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\Core.Domain.pdb
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.dll
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.SqlServer.dll
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.xml
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.SqlServer.xml
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csproj.CoreCompileInputs.cache
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csproj.CopyComplete
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.dll
+E:\Ronak\22-6-2020\KitelyTech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.pdb
