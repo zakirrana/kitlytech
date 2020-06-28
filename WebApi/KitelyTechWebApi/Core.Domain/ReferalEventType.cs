@@ -12,18 +12,18 @@ namespace Core.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class SiteEventType
+    public partial class ReferalEventType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SiteEventType()
+        public ReferalEventType()
         {
-            this.SiteEventDetails = new HashSet<SiteEventDetail>();
+            this.ReferalEventDetails = new HashSet<ReferalEventDetail>();
         }
     
         public int Id { get; set; }
         public string EventType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SiteEventDetail> SiteEventDetails { get; set; }
+        public virtual ICollection<ReferalEventDetail> ReferalEventDetails { get; set; }
     }
 }

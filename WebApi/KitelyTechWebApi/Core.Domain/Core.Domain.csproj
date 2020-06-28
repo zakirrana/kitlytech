@@ -69,6 +69,7 @@
     <Compile Include="Models\AppointmentDetail.cs" />
     <Compile Include="Models\AppointmentType.cs" />
     <Compile Include="Models\CommonAudit.cs" />
+    <Compile Include="Models\EventDetails.cs" />
     <Compile Include="Models\ReferalModel.cs" />
     <Compile Include="Models\StudyModel.cs" />
     <Compile Include="PatientDetail.cs">
@@ -84,7 +85,13 @@
     <Compile Include="ReferalApointmentType.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReferalEventDetail.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReferalEventStatu.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReferalEventType.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReferalPreQualificationDetail.cs">
@@ -96,12 +103,6 @@
     <Compile Include="Repository\AllRepository.cs" />
     <Compile Include="Repository\SiteRepository\SiteRepository.cs" />
     <Compile Include="Repository\_IAllRepository.cs" />
-    <Compile Include="SiteEventDetail.cs">
-      <DependentUpon>CTMDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SiteEventType.cs">
-      <DependentUpon>CTMDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SiteMaster.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
@@ -115,6 +116,9 @@
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetReferalsDetail_Result.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_site_GetReferalsEvents_Result.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetStudiesBySiteId_Result.cs">

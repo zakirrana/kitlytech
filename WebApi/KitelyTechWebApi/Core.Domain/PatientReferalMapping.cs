@@ -17,9 +17,9 @@ namespace Core.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PatientReferalMapping()
         {
-            this.ReferalPreQualificationDetails = new HashSet<ReferalPreQualificationDetail>();
-            this.SiteEventDetails = new HashSet<SiteEventDetail>();
             this.ReferalApointments = new HashSet<ReferalApointment>();
+            this.ReferalPreQualificationDetails = new HashSet<ReferalPreQualificationDetail>();
+            this.ReferalEventDetails = new HashSet<ReferalEventDetail>();
         }
     
         public int ReferalId { get; set; }
@@ -29,10 +29,10 @@ namespace Core.Domain
     
         public virtual PatientDetail PatientDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReferalApointment> ReferalApointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReferalPreQualificationDetail> ReferalPreQualificationDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SiteEventDetail> SiteEventDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReferalApointment> ReferalApointments { get; set; }
+        public virtual ICollection<ReferalEventDetail> ReferalEventDetails { get; set; }
     }
 }

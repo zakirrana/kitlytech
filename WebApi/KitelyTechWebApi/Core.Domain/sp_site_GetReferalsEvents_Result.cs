@@ -10,12 +10,11 @@
 namespace Core.Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SiteEventDetail
+    public partial class sp_site_GetReferalsEvents_Result
     {
         public int Id { get; set; }
-        public int SiteEventTypeId { get; set; }
+        public int EventTypeId { get; set; }
         public Nullable<System.DateTime> EventDate { get; set; }
         public string Comment { get; set; }
         public Nullable<int> ReferalStatusId { get; set; }
@@ -24,8 +23,9 @@ namespace Core.Domain
         public Nullable<int> ReferalId { get; set; }
         public Nullable<int> ApplicableProtocolid { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
-    
-        public virtual PatientReferalMapping PatientReferalMapping { get; set; }
-        public virtual SiteEventType SiteEventType { get; set; }
+        public string EventType { get; set; }
+        public string EventStatus { get; set; }
+        public string ReferalStatus { get; set; }
+        public string ProtocolText { get; set; }
     }
 }

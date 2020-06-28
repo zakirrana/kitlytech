@@ -22,13 +22,13 @@ namespace Core.Domain
         }
     
         public int Id { get; set; }
+        public string StudyCode { get; set; }
         public string StudyTitle { get; set; }
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<int> ModyfiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
-        public string StudyCode { get; set; }
     
         public virtual StudyStatu StudyStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

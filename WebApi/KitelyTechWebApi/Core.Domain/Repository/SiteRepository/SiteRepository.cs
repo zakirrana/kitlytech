@@ -192,5 +192,74 @@ namespace Core.Domain.Repository.SiteRepository
            
             repo.Save();
         }
+        public List<EventDetails> GetEventDetail(int ReferalId)
+        {
+            List<EventDetails> result = new List<EventDetails>();
+            var data = dbContext.sp_site_GetReferalsEvents(ReferalId).ToList();
+            if (data != null && data.Count > 0)
+            {
+                foreach (var value in data)
+                {
+                    EventDetails objevt = new EventDetails();
+                    objevt.Id = value.Id;
+                    objevt.ApplicableProtocolid = value.ApplicableProtocolid??0;
+                    objevt.Comment = value.Comment;
+                    objevt.CreatedOn = value.CreatedOn;
+                    objevt.EventDate = value.EventDate;
+                    objevt.EventStatus = value.EventStatus;
+                    objevt.EventStatusId = value.EventStatusId??0;
+                    objevt.EventTypeId = value.EventTypeId;
+                    objevt.EventType = value.EventType;
+                    objevt.IVRNo = value.IVRNo;
+                    objevt.ReferalId = value.ReferalId??0;
+                    objevt.ReferalStatusId = value.ReferalStatusId ?? 0;
+                    objevt.ReferalStatus = value.ReferalStatus;
+                    
+                    result.Add(objevt);
+
+                }
+            }
+            return result;
+
+
+        }
+        public ReferalEventDetail GetEventDetailById(int Id)
+        {
+           
+            return dbContext.ReferalEventDetails.Where(row=>row.Id==Id).FirstOrDefault();
+           
+
+        }
+        public void SaveEvents(ReferalEventDetail model, int siteId, int studyId)
+        {
+            var repo = new AllRepository<ReferalEventDetail>();
+            if (model.Id == 0)
+            {
+                repo.InsertModel(model);
+            }
+            else
+            {
+                repo.UpdateModel(model);
+
+            }
+            repo.Save();
+            var value = dbContext.StudySiteReferalMappings.Where(row => row.RefrelId == model.ReferalId && row.SiteId == siteId && row.StudyId == studyId).FirstOrDefault();
+            if(value!=null)
+            {
+                value.ReferalStatusId = model.ReferalStatusId;
+                dbContext.Entry(value).State = System.Data.Entity.EntityState.Modified;
+                dbContext.SaveChanges();
+            }
+        }
+        public void DeleteEvent(int Id)
+        {
+            var repo = new AllRepository<ReferalEventDetail>();
+            if (Id > 0)
+            {
+                repo.DeleteModel(Id);
+            }
+
+            repo.Save();
+        }
     }
 }

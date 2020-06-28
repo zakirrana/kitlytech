@@ -197,5 +197,100 @@ namespace KitelyTechWebApi.Controllers
             return JsonConvert.SerializeObject(result);
         }
 
+        public string GetEventDetails(int referalId)
+        {
+            var result = new DataServiceResult<List<EventDetails>>();
+            try
+            {
+                var data = siterepo.GetEventDetail(referalId);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        public string GetEventDetailById(int Id)
+        {
+            var result = new DataServiceResult<ReferalEventDetail>();
+            try
+            {
+                var data = siterepo.GetEventDetailById(Id);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        [HttpPost]
+        public string SaveEventsDetail(string model,int siteId,int studyId)
+        {
+            var result = new DataServiceResult<ReferalEventDetail>();
+            try
+            {
+                var dataModel = JsonConvert.DeserializeObject<ReferalEventDetail>(model);
+                if (dataModel != null)
+                {
+                    siterepo.SaveEvents(dataModel,siteId,studyId);
+
+                    result.Success = true;
+                    result.Value = dataModel;
+                }
+                else
+                {
+                    result.Success = true;
+                    result.ResultMessage = "Failed to convert json model";
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ResultMessage = "Failed to save Data";
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        public string DeleteEvent(int Id)
+        {
+            var result = new DataServiceResult();
+            try
+            {
+                siterepo.DeleteEvent(Id);
+
+                result.Success = true;
+                result.ResultMessage = "Deleted Successfully";
+
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ResultMessage = "Failed to delete Data";
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+
     }
 }

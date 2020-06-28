@@ -46,12 +46,34 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ApointMentType" Type="nvarchar" MaxLength="250" />
   </EntityType>
+  <EntityType Name="ReferalEventDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventTypeId" Type="int" Nullable="false" />
+    <Property Name="EventDate" Type="datetime" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="ReferalStatusId" Type="int" />
+    <Property Name="EventStatusId" Type="int" />
+    <Property Name="IVRNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="ReferalId" Type="int" />
+    <Property Name="ApplicableProtocolid" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
   <EntityType Name="ReferalEventStatus">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EventStatus" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="ReferalEventType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventType" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="ReferalPreQualificationDetail">
     <Key>
@@ -73,28 +95,6 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="ReferalStatus" Type="nvarchar" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="SiteEventDetail">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SiteEventTypeId" Type="int" Nullable="false" />
-    <Property Name="EventDate" Type="datetime" />
-    <Property Name="Comment" Type="nvarchar(max)" />
-    <Property Name="ReferalStatusId" Type="int" />
-    <Property Name="EventStatusId" Type="int" />
-    <Property Name="IVRNo" Type="nvarchar" MaxLength="100" />
-    <Property Name="ReferalId" Type="int" />
-    <Property Name="ApplicableProtocolid" Type="int" />
-    <Property Name="CreatedOn" Type="datetime" />
-  </EntityType>
-  <EntityType Name="SiteEventType">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EventType" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="SiteMaster">
     <Key>
@@ -200,25 +200,25 @@
   </Association>
   <Association Name="FK_SiteEventDetail_PatientReferalMapping">
     <End Role="PatientReferalMapping" Type="Self.PatientReferalMapping" Multiplicity="0..1" />
-    <End Role="SiteEventDetail" Type="Self.SiteEventDetail" Multiplicity="*" />
+    <End Role="ReferalEventDetail" Type="Self.ReferalEventDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PatientReferalMapping">
         <PropertyRef Name="ReferalId" />
       </Principal>
-      <Dependent Role="SiteEventDetail">
+      <Dependent Role="ReferalEventDetail">
         <PropertyRef Name="ReferalId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SiteEventDetail_SiteEventType">
-    <End Role="SiteEventType" Type="Self.SiteEventType" Multiplicity="1" />
-    <End Role="SiteEventDetail" Type="Self.SiteEventDetail" Multiplicity="*" />
+    <End Role="ReferalEventType" Type="Self.ReferalEventType" Multiplicity="1" />
+    <End Role="ReferalEventDetail" Type="Self.ReferalEventDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="SiteEventType">
+      <Principal Role="ReferalEventType">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="SiteEventDetail">
-        <PropertyRef Name="SiteEventTypeId" />
+      <Dependent Role="ReferalEventDetail">
+        <PropertyRef Name="EventTypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -296,6 +296,9 @@
     <Parameter Name="ReferalId" Type="int" Mode="In" />
     <Parameter Name="StudyId" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_site_GetReferalsEvents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReferalId" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_site_GetStudiesBySiteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SiteID" Type="int" Mode="In" />
     <Parameter Name="Search" Type="nvarchar(max)" Mode="In" />
@@ -307,11 +310,11 @@
     <EntitySet Name="PatientReferalMapping" EntityType="Self.PatientReferalMapping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalApointments" EntityType="Self.ReferalApointments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalApointmentType" EntityType="Self.ReferalApointmentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReferalEventDetail" EntityType="Self.ReferalEventDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalEventStatus" EntityType="Self.ReferalEventStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReferalEventType" EntityType="Self.ReferalEventType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalPreQualificationDetail" EntityType="Self.ReferalPreQualificationDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SiteEventDetail" EntityType="Self.SiteEventDetail" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SiteEventType" EntityType="Self.SiteEventType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteMaster" EntityType="Self.SiteMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteReferalStatusReason" EntityType="Self.SiteReferalStatusReason" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Studies" EntityType="Self.Studies" Schema="dbo" store:Type="Tables" />
@@ -333,11 +336,11 @@
     </AssociationSet>
     <AssociationSet Name="FK_SiteEventDetail_PatientReferalMapping" Association="Self.FK_SiteEventDetail_PatientReferalMapping">
       <End Role="PatientReferalMapping" EntitySet="PatientReferalMapping" />
-      <End Role="SiteEventDetail" EntitySet="SiteEventDetail" />
+      <End Role="ReferalEventDetail" EntitySet="ReferalEventDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_SiteEventDetail_SiteEventType" Association="Self.FK_SiteEventDetail_SiteEventType">
-      <End Role="SiteEventType" EntitySet="SiteEventType" />
-      <End Role="SiteEventDetail" EntitySet="SiteEventDetail" />
+      <End Role="ReferalEventType" EntitySet="ReferalEventType" />
+      <End Role="ReferalEventDetail" EntitySet="ReferalEventDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_SiteReferalStatusReason_ReferalStatus" Association="Self.FK_SiteReferalStatusReason_ReferalStatus">
       <End Role="ReferalStatus" EntitySet="ReferalStatus" />

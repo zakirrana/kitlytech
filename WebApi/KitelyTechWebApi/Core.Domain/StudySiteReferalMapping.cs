@@ -20,7 +20,7 @@ namespace Core.Domain
         public Nullable<int> RefrelId { get; set; }
         public Nullable<int> ReferalStatusId { get; set; }
     
-        public virtual Study Study { get; set; }
         public virtual SiteMaster SiteMaster { get; set; }
+        public virtual Study Study { get; set; }
     }
 }
