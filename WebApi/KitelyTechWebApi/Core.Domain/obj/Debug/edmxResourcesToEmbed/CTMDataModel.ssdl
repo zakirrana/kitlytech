@@ -60,6 +60,7 @@
     <Property Name="ReferalId" Type="int" />
     <Property Name="ApplicableProtocolid" Type="int" />
     <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ReferalStatusResonId" Type="int" />
   </EntityType>
   <EntityType Name="ReferalEventStatus">
     <Key>

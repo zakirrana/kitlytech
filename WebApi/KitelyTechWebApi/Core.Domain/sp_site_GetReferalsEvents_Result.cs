@@ -27,5 +27,7 @@ namespace Core.Domain
         public string EventStatus { get; set; }
         public string ReferalStatus { get; set; }
         public string ProtocolText { get; set; }
+        public Nullable<int> ReferalStatusResonId { get; set; }
+        public string Reason { get; set; }
     }
 }

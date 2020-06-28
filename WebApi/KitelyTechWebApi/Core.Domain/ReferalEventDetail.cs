@@ -24,6 +24,7 @@ namespace Core.Domain
         public Nullable<int> ReferalId { get; set; }
         public Nullable<int> ApplicableProtocolid { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<int> ReferalStatusResonId { get; set; }
     
         public virtual PatientReferalMapping PatientReferalMapping { get; set; }
         public virtual ReferalEventType ReferalEventType { get; set; }

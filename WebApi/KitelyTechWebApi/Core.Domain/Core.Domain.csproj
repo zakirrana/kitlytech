@@ -70,6 +70,7 @@
     <Compile Include="Models\AppointmentType.cs" />
     <Compile Include="Models\CommonAudit.cs" />
     <Compile Include="Models\EventDetails.cs" />
+    <Compile Include="Models\EventsCombo.cs" />
     <Compile Include="Models\ReferalModel.cs" />
     <Compile Include="Models\StudyModel.cs" />
     <Compile Include="PatientDetail.cs">

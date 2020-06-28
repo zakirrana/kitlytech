@@ -65,6 +65,7 @@
           <Property Name="ReferalId" Type="int" />
           <Property Name="ApplicableProtocolid" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ReferalStatusResonId" Type="int" />
         </EntityType>
         <EntityType Name="ReferalEventStatus">
           <Key>
@@ -571,6 +572,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="ReferalEventDetail" ToRole="PatientReferalMapping" />
           <NavigationProperty Name="ReferalEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="ReferalEventDetail" ToRole="ReferalEventType" />
+          <Property Name="ReferalStatusResonId" Type="Int32" />
         </EntityType>
         <EntityType Name="ReferalEventStatu">
           <Key>
@@ -820,6 +822,8 @@
           <Property Type="String" Name="EventStatus" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="ReferalStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ProtocolText" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="ReferalStatusResonId" Nullable="true" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -946,6 +950,7 @@
           <EntitySetMapping Name="ReferalEventDetails">
             <EntityTypeMapping TypeName="CTMModel.ReferalEventDetail">
               <MappingFragment StoreEntitySet="ReferalEventDetail">
+                <ScalarProperty Name="ReferalStatusResonId" ColumnName="ReferalStatusResonId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />
                 <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
@@ -1088,6 +1093,8 @@
                 <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
                 <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
                 <ScalarProperty Name="ProtocolText" ColumnName="ProtocolText" />
+                <ScalarProperty Name="ReferalStatusResonId" ColumnName="ReferalStatusResonId" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

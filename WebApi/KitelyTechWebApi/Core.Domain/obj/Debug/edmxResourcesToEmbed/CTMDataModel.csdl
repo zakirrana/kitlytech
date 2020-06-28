@@ -199,6 +199,7 @@
     <Property Name="CreatedOn" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="ReferalEventDetail" ToRole="PatientReferalMapping" />
     <NavigationProperty Name="ReferalEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="ReferalEventDetail" ToRole="ReferalEventType" />
+    <Property Name="ReferalStatusResonId" Type="Int32" />
   </EntityType>
   <EntityType Name="ReferalEventStatu">
     <Key>
@@ -448,5 +449,7 @@
     <Property Type="String" Name="EventStatus" Nullable="true" MaxLength="250" />
     <Property Type="String" Name="ReferalStatus" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="ProtocolText" Nullable="true" MaxLength="300" />
+    <Property Type="Int32" Name="ReferalStatusResonId" Nullable="true" />
+    <Property Type="String" Name="Reason" Nullable="true" MaxLength="500" />
   </ComplexType>
 </Schema>

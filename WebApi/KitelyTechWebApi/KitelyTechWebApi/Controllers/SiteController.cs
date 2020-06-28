@@ -291,6 +291,48 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        public string GetEventcombos()
+        {
+            var result = new DataServiceResult<EventsCombo>();
+            try
+            {
+                var data = siterepo.GetEventsCombo();
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
 
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+
+        public string GetApplicableProtocol(int studyId)
+        {
+            var result = new DataServiceResult<List<Core.Domain.StudyProtocol>>();
+            try
+            {
+                var data = siterepo.GetApplicableProtocol(studyId);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
     }
 }

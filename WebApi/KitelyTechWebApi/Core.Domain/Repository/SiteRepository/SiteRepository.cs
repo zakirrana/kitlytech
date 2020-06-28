@@ -261,5 +261,23 @@ namespace Core.Domain.Repository.SiteRepository
 
             repo.Save();
         }
+
+        public EventsCombo GetEventsCombo()
+        {
+            var eventcombos = new EventsCombo();
+            eventcombos.referalStatus = dbContext.ReferalStatus.ToList();
+            eventcombos.referalStatusReson = dbContext.SiteReferalStatusReasons.ToList();
+            eventcombos.eventTypes = dbContext.ReferalEventTypes.ToList();
+            eventcombos.referalEventStatus = dbContext.ReferalEventStatus.ToList();
+            return eventcombos;
+
+        }
+
+        public List<StudyProtocol> GetApplicableProtocol(int studyId)
+        {
+            return dbContext.StudyProtocols.Where(row=>row.StudyId==studyId).ToList();
+        }
+
+       
     }
 }
