@@ -65,7 +65,7 @@ namespace KitelyTechWebApi.Controllers
             var result = new DataServiceResult<ReferalModel>();
             try
             {
-                var data = siterepo.GetReferalDetail(referalId,studyId);
+                var data = siterepo.GetReferalDetail(referalId, studyId);
                 if (data != null)
                 {
                     result.Success = true;
@@ -123,5 +123,79 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        public string GetApintMentDetailById(int Id)
+        {
+            var result = new DataServiceResult<AppointmentDetail>();
+            try
+            {
+                var data = siterepo.GetApintMentDetailById(Id);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        [HttpPost]
+        public string SaveApointMentDetail(string model)
+        {
+            var result = new DataServiceResult<ReferalApointment>();
+            try
+            {
+                var dataModel = JsonConvert.DeserializeObject<ReferalApointment>(model);
+                if (dataModel != null)
+                {
+                    siterepo.SaveApointMent(dataModel);
+
+                    result.Success = true;
+                    result.Value = dataModel;
+                }
+                else
+                {
+                    result.Success = true;
+                    result.ResultMessage = "Failed to convert json model";
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ResultMessage = "Failed to save Data";
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        public string DeleteApointMent(int Id)
+        {
+            var result = new DataServiceResult();
+            try
+            {
+                siterepo.DeleteApointMent(Id);
+
+                result.Success = true;
+                result.ResultMessage = "DeletedSuccess fully";
+
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ResultMessage = "Failed to delete Data";
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+
     }
 }

@@ -145,5 +145,52 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
+        public AppointmentDetail GetApintMentDetailById(int Id)
+        {
+            AppointmentDetail result = new AppointmentDetail();
+            var value = dbContext.ReferalApointments.Where(x=>x.Id==Id).FirstOrDefault();
+            if (value != null)
+            {
+                
+                    AppointmentDetail objapt = new AppointmentDetail();
+                    objapt.Id = value.Id;
+                    objapt.referalId = value.ReferalId ?? 0;
+                    objapt.ApintMentTypeId = value.AppointmentTypeId ?? 0;
+                  
+                    objapt.Date = value.ApointmentDate;
+                    objapt.CreatedOn = value.CreatedOn;
+                    objapt.Notes = value.Note;
+                   
+
+               
+            }
+            return result;
+
+
+        }
+        public void SaveApointMent(ReferalApointment model)
+        {
+            var repo = new AllRepository<ReferalApointment>();
+            if (model.Id == 0)
+            {
+                repo.InsertModel(model);
+            }
+            else
+            {
+                repo.UpdateModel(model);
+               
+            }
+            repo.Save();
+        }
+        public void DeleteApointMent(int Id)
+        {
+            var repo = new AllRepository<ReferalApointment>();
+            if (Id > 0)
+            {
+                repo.DeleteModel(Id);
+            }
+           
+            repo.Save();
+        }
     }
 }
