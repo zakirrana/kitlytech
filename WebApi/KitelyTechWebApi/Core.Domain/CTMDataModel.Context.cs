@@ -28,10 +28,7 @@ namespace Core.Domain
         }
     
         public virtual DbSet<PatientDetail> PatientDetails { get; set; }
-        public virtual DbSet<ReferalApointment> ReferalApointments { get; set; }
-        public virtual DbSet<ReferalPreQualificationDetail> ReferalPreQualificationDetails { get; set; }
         public virtual DbSet<ReferalStatu> ReferalStatus { get; set; }
-        public virtual DbSet<SiteEventDetail> SiteEventDetails { get; set; }
         public virtual DbSet<SiteEventType> SiteEventTypes { get; set; }
         public virtual DbSet<SiteReferalStatusReason> SiteReferalStatusReasons { get; set; }
         public virtual DbSet<Study> Studies { get; set; }
@@ -41,6 +38,11 @@ namespace Core.Domain
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<PatientReferalMapping> PatientReferalMappings { get; set; }
         public virtual DbSet<SiteMaster> SiteMasters { get; set; }
+        public virtual DbSet<ReferalPreQualificationDetail> ReferalPreQualificationDetails { get; set; }
+        public virtual DbSet<SiteEventDetail> SiteEventDetails { get; set; }
+        public virtual DbSet<ReferalEventStatu> ReferalEventStatus { get; set; }
+        public virtual DbSet<ReferalApointmentType> ReferalApointmentTypes { get; set; }
+        public virtual DbSet<ReferalApointment> ReferalApointments { get; set; }
     
         public virtual ObjectResult<sp_site_GetStudiesBySiteId_Result> sp_site_GetStudiesBySiteId(Nullable<int> siteID, string search, Nullable<long> fromRecord, Nullable<long> toRecord)
         {
@@ -99,6 +101,15 @@ namespace Core.Domain
                 new ObjectParameter("StudyId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetReferalsDetail_Result>("sp_site_GetReferalsDetail", referalIdParameter, studyIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_site_GetReferalsApointments_Result> sp_site_GetReferalsApointments(Nullable<int> referalId)
+        {
+            var referalIdParameter = referalId.HasValue ?
+                new ObjectParameter("ReferalId", referalId) :
+                new ObjectParameter("ReferalId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetReferalsApointments_Result>("sp_site_GetReferalsApointments", referalIdParameter);
         }
     }
 }

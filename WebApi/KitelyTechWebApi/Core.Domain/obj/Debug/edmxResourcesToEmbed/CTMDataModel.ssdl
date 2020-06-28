@@ -33,19 +33,33 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AppointmentType" Type="nvarchar" MaxLength="100" />
+    <Property Name="AppointmentTypeId" Type="int" />
     <Property Name="ApointmentDate" Type="datetime" />
     <Property Name="Note" Type="nvarchar(max)" />
     <Property Name="ReferalId" Type="int" />
     <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReferalApointmentType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApointMentType" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="ReferalEventStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventStatus" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="ReferalPreQualificationDetail">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Questions" Type="nvarchar(max)" />
-    <Property Name="Response" Type="nvarchar" MaxLength="500" />
+    <Property Name="QuestionId" Type="int" />
+    <Property Name="AnswerIds" Type="nvarchar" MaxLength="500" />
     <Property Name="ReferalId" Type="int" />
     <Property Name="PreScreeningDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
@@ -68,8 +82,8 @@
     <Property Name="SiteEventTypeId" Type="int" Nullable="false" />
     <Property Name="EventDate" Type="datetime" />
     <Property Name="Comment" Type="nvarchar(max)" />
-    <Property Name="PhoneScreeningResult" Type="nvarchar" MaxLength="100" />
     <Property Name="ReferalStatusId" Type="int" />
+    <Property Name="EventStatusId" Type="int" />
     <Property Name="IVRNo" Type="nvarchar" MaxLength="100" />
     <Property Name="ReferalId" Type="int" />
     <Property Name="ApplicableProtocolid" Type="int" />
@@ -268,6 +282,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_site_GetReferalsApointments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReferalId" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_site_GetReferalsByStudyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SiteId" Type="int" Mode="In" />
     <Parameter Name="StudyId" Type="int" Mode="In" />
@@ -289,6 +306,8 @@
     <EntitySet Name="PatientDetail" EntityType="Self.PatientDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientReferalMapping" EntityType="Self.PatientReferalMapping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalApointments" EntityType="Self.ReferalApointments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReferalApointmentType" EntityType="Self.ReferalApointmentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReferalEventStatus" EntityType="Self.ReferalEventStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalPreQualificationDetail" EntityType="Self.ReferalPreQualificationDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteEventDetail" EntityType="Self.SiteEventDetail" Schema="dbo" store:Type="Tables" />

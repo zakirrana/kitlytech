@@ -38,19 +38,33 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AppointmentType" Type="nvarchar" MaxLength="100" />
+          <Property Name="AppointmentTypeId" Type="int" />
           <Property Name="ApointmentDate" Type="datetime" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="ReferalId" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReferalApointmentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApointMentType" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="ReferalEventStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventStatus" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="ReferalPreQualificationDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Questions" Type="nvarchar(max)" />
-          <Property Name="Response" Type="nvarchar" MaxLength="500" />
+          <Property Name="QuestionId" Type="int" />
+          <Property Name="AnswerIds" Type="nvarchar" MaxLength="500" />
           <Property Name="ReferalId" Type="int" />
           <Property Name="PreScreeningDate" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
@@ -73,8 +87,8 @@
           <Property Name="SiteEventTypeId" Type="int" Nullable="false" />
           <Property Name="EventDate" Type="datetime" />
           <Property Name="Comment" Type="nvarchar(max)" />
-          <Property Name="PhoneScreeningResult" Type="nvarchar" MaxLength="100" />
           <Property Name="ReferalStatusId" Type="int" />
+          <Property Name="EventStatusId" Type="int" />
           <Property Name="IVRNo" Type="nvarchar" MaxLength="100" />
           <Property Name="ReferalId" Type="int" />
           <Property Name="ApplicableProtocolid" Type="int" />
@@ -273,6 +287,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_site_GetReferalsApointments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferalId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_site_GetReferalsByStudyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteId" Type="int" Mode="In" />
           <Parameter Name="StudyId" Type="int" Mode="In" />
@@ -294,6 +311,8 @@
           <EntitySet Name="PatientDetail" EntityType="Self.PatientDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientReferalMapping" EntityType="Self.PatientReferalMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalApointments" EntityType="Self.ReferalApointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferalApointmentType" EntityType="Self.ReferalApointmentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferalEventStatus" EntityType="Self.ReferalEventStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalPreQualificationDetail" EntityType="Self.ReferalPreQualificationDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteEventDetail" EntityType="Self.SiteEventDetail" Schema="dbo" store:Type="Tables" />
@@ -370,33 +389,6 @@
           <Property Name="CareGiversName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CareGiverrsPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ReferalApointment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AppointmentType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ApointmentDate" Type="DateTime" Precision="3" />
-          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ReferalId" Type="Int32" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_ReferalApointments_PatientReferalMapping" FromRole="ReferalApointment" ToRole="PatientReferalMapping" />
-        </EntityType>
-        <EntityType Name="ReferalPreQualificationDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Questions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Response" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ReferalId" Type="Int32" />
-          <Property Name="PreScreeningDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" FromRole="ReferalPreQualificationDetail" ToRole="PatientReferalMapping" />
-        </EntityType>
         <EntityType Name="ReferalStatu">
           <Key>
             <PropertyRef Name="Id" />
@@ -405,30 +397,13 @@
           <Property Name="ReferalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SiteReferalStatusReasons" Relationship="Self.FK_SiteReferalStatusReason_ReferalStatus" FromRole="ReferalStatus" ToRole="SiteReferalStatusReason" />
         </EntityType>
-        <EntityType Name="SiteEventDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SiteEventTypeId" Type="Int32" Nullable="false" />
-          <Property Name="EventDate" Type="DateTime" Precision="3" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneScreeningResult" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ReferalStatusId" Type="Int32" />
-          <Property Name="IVRNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ReferalId" Type="Int32" />
-          <Property Name="ApplicableProtocolid" Type="Int32" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SiteEventType" Relationship="Self.FK_SiteEventDetail_SiteEventType" FromRole="SiteEventDetail" ToRole="SiteEventType" />
-          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="SiteEventDetail" ToRole="PatientReferalMapping" />
-        </EntityType>
         <EntityType Name="SiteEventType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventType" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SiteEventDetails" Relationship="Self.FK_SiteEventDetail_SiteEventType" FromRole="SiteEventType" ToRole="SiteEventDetail" />
+          <NavigationProperty Name="SiteEventDetails" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="SiteEventType" ToRole="SiteEventDetail" />
         </EntityType>
         <EntityType Name="SiteReferalStatusReason">
           <Key>
@@ -506,18 +481,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SiteEventDetail_SiteEventType">
-          <End Role="SiteEventType" Type="Self.SiteEventType" Multiplicity="1" />
-          <End Role="SiteEventDetail" Type="Self.SiteEventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SiteEventType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SiteEventDetail">
-              <PropertyRef Name="SiteEventTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Studies_StudyStatus">
           <End Role="StudyStatus" Type="Self.StudyStatu" Multiplicity="0..1" />
           <End Role="Studies" Type="Self.Study" Multiplicity="*" />
@@ -556,10 +519,7 @@
         </Association>
         <EntityContainer Name="CTMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PatientDetails" EntityType="Self.PatientDetail" />
-          <EntitySet Name="ReferalApointments" EntityType="Self.ReferalApointment" />
-          <EntitySet Name="ReferalPreQualificationDetails" EntityType="Self.ReferalPreQualificationDetail" />
           <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatu" />
-          <EntitySet Name="SiteEventDetails" EntityType="Self.SiteEventDetail" />
           <EntitySet Name="SiteEventTypes" EntityType="Self.SiteEventType" />
           <EntitySet Name="SiteReferalStatusReasons" EntityType="Self.SiteReferalStatusReason" />
           <EntitySet Name="Studies" EntityType="Self.Study" />
@@ -570,10 +530,6 @@
           <AssociationSet Name="FK_SiteReferalStatusReason_ReferalStatus" Association="Self.FK_SiteReferalStatusReason_ReferalStatus">
             <End Role="ReferalStatus" EntitySet="ReferalStatus" />
             <End Role="SiteReferalStatusReason" EntitySet="SiteReferalStatusReasons" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SiteEventDetail_SiteEventType" Association="Self.FK_SiteEventDetail_SiteEventType">
-            <End Role="SiteEventType" EntitySet="SiteEventTypes" />
-            <End Role="SiteEventDetail" EntitySet="SiteEventDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Studies_StudyStatus" Association="Self.FK_Studies_StudyStatus">
             <End Role="StudyStatus" EntitySet="StudyStatus" />
@@ -605,18 +561,6 @@
             <End Role="PatientDetail" EntitySet="PatientDetails" />
             <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReferalApointments_PatientReferalMapping" Association="CTMModel.FK_ReferalApointments_PatientReferalMapping">
-            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
-            <End Role="ReferalApointment" EntitySet="ReferalApointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReferalPreQualificationDetail_PatientReferalMapping" Association="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping">
-            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
-            <End Role="ReferalPreQualificationDetail" EntitySet="ReferalPreQualificationDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SiteEventDetail_PatientReferalMapping" Association="CTMModel.FK_SiteEventDetail_PatientReferalMapping">
-            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
-            <End Role="SiteEventDetail" EntitySet="SiteEventDetails" />
-          </AssociationSet>
           <EntitySet Name="SiteMasters" EntityType="CTMModel.SiteMaster" />
           <AssociationSet Name="FK_StudySiteReferalMapping_SiteMaster" Association="CTMModel.FK_StudySiteReferalMapping_SiteMaster">
             <End Role="SiteMaster" EntitySet="SiteMasters" />
@@ -625,6 +569,30 @@
           <FunctionImport Name="sp_site_GetReferalsDetail" ReturnType="Collection(CTMModel.sp_site_GetReferalsDetail_Result)">
             <Parameter Name="ReferalId" Mode="In" Type="Int32" />
             <Parameter Name="StudyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ReferalPreQualificationDetails" EntityType="CTMModel.ReferalPreQualificationDetail" />
+          <AssociationSet Name="FK_ReferalPreQualificationDetail_PatientReferalMapping" Association="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping">
+            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
+            <End Role="ReferalPreQualificationDetail" EntitySet="ReferalPreQualificationDetails" />
+          </AssociationSet>
+          <EntitySet Name="SiteEventDetails" EntityType="CTMModel.SiteEventDetail" />
+          <AssociationSet Name="FK_SiteEventDetail_PatientReferalMapping" Association="CTMModel.FK_SiteEventDetail_PatientReferalMapping">
+            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
+            <End Role="SiteEventDetail" EntitySet="SiteEventDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SiteEventDetail_SiteEventType" Association="CTMModel.FK_SiteEventDetail_SiteEventType">
+            <End Role="SiteEventType" EntitySet="SiteEventTypes" />
+            <End Role="SiteEventDetail" EntitySet="SiteEventDetails" />
+          </AssociationSet>
+          <EntitySet Name="ReferalEventStatus" EntityType="CTMModel.ReferalEventStatu" />
+          <EntitySet Name="ReferalApointmentTypes" EntityType="CTMModel.ReferalApointmentType" />
+          <EntitySet Name="ReferalApointments" EntityType="CTMModel.ReferalApointment" />
+          <AssociationSet Name="FK_ReferalApointments_PatientReferalMapping" Association="CTMModel.FK_ReferalApointments_PatientReferalMapping">
+            <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
+            <End Role="ReferalApointment" EntitySet="ReferalApointments" />
+          </AssociationSet>
+          <FunctionImport Name="sp_site_GetReferalsApointments" ReturnType="Collection(CTMModel.sp_site_GetReferalsApointments_Result)">
+            <Parameter Name="ReferalId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_site_GetStudiesBySiteId_Result">
@@ -659,9 +627,9 @@
           <Property Name="StudyId" Type="Int32" />
           <Property Name="PatientId" Type="Int32" />
           <NavigationProperty Name="PatientDetail" Relationship="CTMModel.FK_PatientReferalMapping_PatientDetail" FromRole="PatientReferalMapping" ToRole="PatientDetail" />
-          <NavigationProperty Name="ReferalApointments" Relationship="CTMModel.FK_ReferalApointments_PatientReferalMapping" FromRole="PatientReferalMapping" ToRole="ReferalApointment" />
           <NavigationProperty Name="ReferalPreQualificationDetails" Relationship="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" FromRole="PatientReferalMapping" ToRole="ReferalPreQualificationDetail" />
           <NavigationProperty Name="SiteEventDetails" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="PatientReferalMapping" ToRole="SiteEventDetail" />
+          <NavigationProperty Name="ReferalApointments" Relationship="CTMModel.FK_ReferalApointments_PatientReferalMapping" FromRole="PatientReferalMapping" ToRole="ReferalApointment" />
         </EntityType>
         <Association Name="FK_PatientReferalMapping_PatientDetail">
           <End Type="CTMModel.PatientDetail" Role="PatientDetail" Multiplicity="0..1" />
@@ -672,42 +640,6 @@
             </Principal>
             <Dependent Role="PatientReferalMapping">
               <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReferalApointments_PatientReferalMapping">
-          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
-          <End Type="CTMModel.ReferalApointment" Role="ReferalApointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PatientReferalMapping">
-              <PropertyRef Name="ReferalId" />
-            </Principal>
-            <Dependent Role="ReferalApointment">
-              <PropertyRef Name="ReferalId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReferalPreQualificationDetail_PatientReferalMapping">
-          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
-          <End Type="CTMModel.ReferalPreQualificationDetail" Role="ReferalPreQualificationDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PatientReferalMapping">
-              <PropertyRef Name="ReferalId" />
-            </Principal>
-            <Dependent Role="ReferalPreQualificationDetail">
-              <PropertyRef Name="ReferalId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SiteEventDetail_PatientReferalMapping">
-          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
-          <End Type="CTMModel.SiteEventDetail" Role="SiteEventDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PatientReferalMapping">
-              <PropertyRef Name="ReferalId" />
-            </Principal>
-            <Dependent Role="SiteEventDetail">
-              <PropertyRef Name="ReferalId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -752,6 +684,121 @@
           <Property Type="String" Name="ReferalStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ReferalCode" Nullable="true" MaxLength="504" />
         </ComplexType>
+        <EntityType Name="ReferalPreQualificationDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" />
+          <Property Name="AnswerIds" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ReferalId" Type="Int32" />
+          <Property Name="PreScreeningDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" FromRole="ReferalPreQualificationDetail" ToRole="PatientReferalMapping" />
+        </EntityType>
+        <Association Name="FK_ReferalPreQualificationDetail_PatientReferalMapping">
+          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
+          <End Type="CTMModel.ReferalPreQualificationDetail" Role="ReferalPreQualificationDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientReferalMapping">
+              <PropertyRef Name="ReferalId" />
+            </Principal>
+            <Dependent Role="ReferalPreQualificationDetail">
+              <PropertyRef Name="ReferalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SiteEventDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteEventTypeId" Type="Int32" Nullable="false" />
+          <Property Name="EventDate" Type="DateTime" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReferalStatusId" Type="Int32" />
+          <Property Name="EventStatusId" Type="Int32" />
+          <Property Name="IVRNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ReferalId" Type="Int32" />
+          <Property Name="ApplicableProtocolid" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="SiteEventDetail" ToRole="PatientReferalMapping" />
+          <NavigationProperty Name="SiteEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="SiteEventDetail" ToRole="SiteEventType" />
+        </EntityType>
+        <Association Name="FK_SiteEventDetail_PatientReferalMapping">
+          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
+          <End Type="CTMModel.SiteEventDetail" Role="SiteEventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientReferalMapping">
+              <PropertyRef Name="ReferalId" />
+            </Principal>
+            <Dependent Role="SiteEventDetail">
+              <PropertyRef Name="ReferalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SiteEventDetail_SiteEventType">
+          <End Type="CTMModel.SiteEventType" Role="SiteEventType" Multiplicity="1" />
+          <End Type="CTMModel.SiteEventDetail" Role="SiteEventDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteEventType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SiteEventDetail">
+              <PropertyRef Name="SiteEventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ReferalEventStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventStatus" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ReferalApointmentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApointMentType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ReferalApointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentTypeId" Type="Int32" />
+          <Property Name="ApointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReferalId" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_ReferalApointments_PatientReferalMapping" FromRole="ReferalApointment" ToRole="PatientReferalMapping" />
+        </EntityType>
+        <Association Name="FK_ReferalApointments_PatientReferalMapping">
+          <End Type="CTMModel.PatientReferalMapping" Role="PatientReferalMapping" Multiplicity="0..1" />
+          <End Type="CTMModel.ReferalApointment" Role="ReferalApointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientReferalMapping">
+              <PropertyRef Name="ReferalId" />
+            </Principal>
+            <Dependent Role="ReferalApointment">
+              <PropertyRef Name="ReferalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_site_GetReferalsApointments_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="AppointmentTypeId" Nullable="true" />
+          <Property Type="DateTime" Name="ApointmentDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Int32" Name="ReferalId" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ApointMentType" Nullable="true" MaxLength="250" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -778,54 +825,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ReferalApointments">
-            <EntityTypeMapping TypeName="CTMModel.ReferalApointment">
-              <MappingFragment StoreEntitySet="ReferalApointments">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AppointmentType" ColumnName="AppointmentType" />
-                <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReferalPreQualificationDetails">
-            <EntityTypeMapping TypeName="CTMModel.ReferalPreQualificationDetail">
-              <MappingFragment StoreEntitySet="ReferalPreQualificationDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Questions" ColumnName="Questions" />
-                <ScalarProperty Name="Response" ColumnName="Response" />
-                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-                <ScalarProperty Name="PreScreeningDate" ColumnName="PreScreeningDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ReferalStatus">
             <EntityTypeMapping TypeName="CTMModel.ReferalStatu">
               <MappingFragment StoreEntitySet="ReferalStatus">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SiteEventDetails">
-            <EntityTypeMapping TypeName="CTMModel.SiteEventDetail">
-              <MappingFragment StoreEntitySet="SiteEventDetail">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SiteEventTypeId" ColumnName="SiteEventTypeId" />
-                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="PhoneScreeningResult" ColumnName="PhoneScreeningResult" />
-                <ScalarProperty Name="ReferalStatusId" ColumnName="ReferalStatusId" />
-                <ScalarProperty Name="IVRNo" ColumnName="IVRNo" />
-                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-                <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -970,6 +974,78 @@
                 <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
                 <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
                 <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ReferalPreQualificationDetails">
+            <EntityTypeMapping TypeName="CTMModel.ReferalPreQualificationDetail">
+              <MappingFragment StoreEntitySet="ReferalPreQualificationDetail">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PreScreeningDate" ColumnName="PreScreeningDate" />
+                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+                <ScalarProperty Name="AnswerIds" ColumnName="AnswerIds" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteEventDetails">
+            <EntityTypeMapping TypeName="CTMModel.SiteEventDetail">
+              <MappingFragment StoreEntitySet="SiteEventDetail">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />
+                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+                <ScalarProperty Name="IVRNo" ColumnName="IVRNo" />
+                <ScalarProperty Name="EventStatusId" ColumnName="EventStatusId" />
+                <ScalarProperty Name="ReferalStatusId" ColumnName="ReferalStatusId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="SiteEventTypeId" ColumnName="SiteEventTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferalEventStatus">
+            <EntityTypeMapping TypeName="CTMModel.ReferalEventStatu">
+              <MappingFragment StoreEntitySet="ReferalEventStatus">
+                <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferalApointmentTypes">
+            <EntityTypeMapping TypeName="CTMModel.ReferalApointmentType">
+              <MappingFragment StoreEntitySet="ReferalApointmentType">
+                <ScalarProperty Name="ApointMentType" ColumnName="ApointMentType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferalApointments">
+            <EntityTypeMapping TypeName="CTMModel.ReferalApointment">
+              <MappingFragment StoreEntitySet="ReferalApointments">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
+                <ScalarProperty Name="AppointmentTypeId" ColumnName="AppointmentTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_site_GetReferalsApointments" FunctionName="CTMModel.Store.sp_site_GetReferalsApointments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CTMModel.sp_site_GetReferalsApointments_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppointmentTypeId" ColumnName="AppointmentTypeId" />
+                <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ApointMentType" ColumnName="ApointMentType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

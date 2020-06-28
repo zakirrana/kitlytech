@@ -10,20 +10,15 @@
 namespace Core.Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ReferalPreQualificationDetail
+    public partial class sp_site_GetReferalsApointments_Result
     {
         public int Id { get; set; }
-        public Nullable<int> QuestionId { get; set; }
-        public string AnswerIds { get; set; }
+        public Nullable<int> AppointmentTypeId { get; set; }
+        public Nullable<System.DateTime> ApointmentDate { get; set; }
+        public string Note { get; set; }
         public Nullable<int> ReferalId { get; set; }
-        public Nullable<System.DateTime> PreScreeningDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedOn { get; set; }
-    
-        public virtual PatientReferalMapping PatientReferalMapping { get; set; }
+        public string ApointMentType { get; set; }
     }
 }

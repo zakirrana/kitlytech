@@ -70,7 +70,7 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
-        public ReferalModel GeReferalDetail(int referalId, int studyId)
+        public ReferalModel GetReferalDetail(int referalId, int studyId)
         {
             ReferalModel result = new ReferalModel();
             var data = dbContext.sp_site_GetReferalsDetail(referalId, studyId).FirstOrDefault();
@@ -98,6 +98,48 @@ namespace Core.Domain.Repository.SiteRepository
                 result = objref;
 
 
+            }
+            return result;
+
+
+        }
+        public List<AppointmentType> GetApintMentTypeCombo()
+        {
+            List<AppointmentType> result = new List<AppointmentType>();
+            var data = dbContext.ReferalApointmentTypes.ToList();
+            if (data != null && data.Count > 0)
+            {
+                foreach (var value in data)
+                {
+                    AppointmentType objetype = new AppointmentType();
+                    objetype.Id = value.Id;
+                    result.Add(objetype);
+
+                }
+            }
+            return result;
+
+
+        }
+        public List<AppointmentDetail> GetApintMentDetail(int ReferalId)
+        {
+            List<AppointmentDetail> result = new List<AppointmentDetail>();
+            var data = dbContext.sp_site_GetReferalsApointments(ReferalId).ToList();
+            if (data != null && data.Count > 0)
+            {
+                foreach (var value in data)
+                {
+                    AppointmentDetail objapt = new AppointmentDetail();
+                    objapt.Id = value.Id;
+                    objapt.referalId = value.ReferalId??0;
+                    objapt.ApintMentTypeId = value.AppointmentTypeId ?? 0;
+                    objapt.ApointMentType = value.ApointMentType;
+                    objapt.Date = value.ApointmentDate;
+                    objapt.CreatedOn = value.CreatedOn;
+                    objapt.Notes = value.Note;
+                    result.Add(objapt);
+
+                }
             }
             return result;
 

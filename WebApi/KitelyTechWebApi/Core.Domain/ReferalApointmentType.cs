@@ -12,15 +12,9 @@ namespace Core.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class ReferalApointment
+    public partial class ReferalApointmentType
     {
         public int Id { get; set; }
-        public Nullable<int> AppointmentTypeId { get; set; }
-        public Nullable<System.DateTime> ApointmentDate { get; set; }
-        public string Note { get; set; }
-        public Nullable<int> ReferalId { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-    
-        public virtual PatientReferalMapping PatientReferalMapping { get; set; }
+        public string ApointMentType { get; set; }
     }
 }

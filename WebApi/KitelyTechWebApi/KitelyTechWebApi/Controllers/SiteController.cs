@@ -65,7 +65,49 @@ namespace KitelyTechWebApi.Controllers
             var result = new DataServiceResult<ReferalModel>();
             try
             {
-                var data = siterepo.GeReferalDetail(referalId,studyId);
+                var data = siterepo.GetReferalDetail(referalId,studyId);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        public string GetApointmentTypeCombo()
+        {
+            var result = new DataServiceResult<List<AppointmentType>>();
+            try
+            {
+                var data = siterepo.GetApintMentTypeCombo();
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+        public string GetApointmentDetail(int referalId)
+        {
+            var result = new DataServiceResult<List<AppointmentDetail>>();
+            try
+            {
+                var data = siterepo.GetApintMentDetail(referalId);
                 if (data != null)
                 {
                     result.Success = true;

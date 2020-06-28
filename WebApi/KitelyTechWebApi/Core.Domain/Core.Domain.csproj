@@ -66,6 +66,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CTMDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\AppointmentDetail.cs" />
+    <Compile Include="Models\AppointmentType.cs" />
     <Compile Include="Models\CommonAudit.cs" />
     <Compile Include="Models\ReferalModel.cs" />
     <Compile Include="Models\StudyModel.cs" />
@@ -77,6 +79,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferalApointment.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReferalApointmentType.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReferalEventStatu.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReferalPreQualificationDetail.cs">
@@ -98,6 +106,9 @@
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteReferalStatusReason.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_site_GetReferalsApointments_Result.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetReferalsByStudyId_Result.cs">

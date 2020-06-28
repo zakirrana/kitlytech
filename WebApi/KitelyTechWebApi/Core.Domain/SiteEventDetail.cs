@@ -18,14 +18,14 @@ namespace Core.Domain
         public int SiteEventTypeId { get; set; }
         public Nullable<System.DateTime> EventDate { get; set; }
         public string Comment { get; set; }
-        public string PhoneScreeningResult { get; set; }
         public Nullable<int> ReferalStatusId { get; set; }
+        public Nullable<int> EventStatusId { get; set; }
         public string IVRNo { get; set; }
         public Nullable<int> ReferalId { get; set; }
         public Nullable<int> ApplicableProtocolid { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
     
-        public virtual SiteEventType SiteEventType { get; set; }
         public virtual PatientReferalMapping PatientReferalMapping { get; set; }
+        public virtual SiteEventType SiteEventType { get; set; }
     }
 }

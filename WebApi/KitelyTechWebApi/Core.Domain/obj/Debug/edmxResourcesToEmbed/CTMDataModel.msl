@@ -21,54 +21,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ReferalApointments">
-      <EntityTypeMapping TypeName="CTMModel.ReferalApointment">
-        <MappingFragment StoreEntitySet="ReferalApointments">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="AppointmentType" ColumnName="AppointmentType" />
-          <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
-          <ScalarProperty Name="Note" ColumnName="Note" />
-          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ReferalPreQualificationDetails">
-      <EntityTypeMapping TypeName="CTMModel.ReferalPreQualificationDetail">
-        <MappingFragment StoreEntitySet="ReferalPreQualificationDetail">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Questions" ColumnName="Questions" />
-          <ScalarProperty Name="Response" ColumnName="Response" />
-          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-          <ScalarProperty Name="PreScreeningDate" ColumnName="PreScreeningDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ReferalStatus">
       <EntityTypeMapping TypeName="CTMModel.ReferalStatu">
         <MappingFragment StoreEntitySet="ReferalStatus">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SiteEventDetails">
-      <EntityTypeMapping TypeName="CTMModel.SiteEventDetail">
-        <MappingFragment StoreEntitySet="SiteEventDetail">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SiteEventTypeId" ColumnName="SiteEventTypeId" />
-          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="PhoneScreeningResult" ColumnName="PhoneScreeningResult" />
-          <ScalarProperty Name="ReferalStatusId" ColumnName="ReferalStatusId" />
-          <ScalarProperty Name="IVRNo" ColumnName="IVRNo" />
-          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
-          <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -213,6 +170,78 @@
           <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
           <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
           <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ReferalPreQualificationDetails">
+      <EntityTypeMapping TypeName="CTMModel.ReferalPreQualificationDetail">
+        <MappingFragment StoreEntitySet="ReferalPreQualificationDetail">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="PreScreeningDate" ColumnName="PreScreeningDate" />
+          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+          <ScalarProperty Name="AnswerIds" ColumnName="AnswerIds" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SiteEventDetails">
+      <EntityTypeMapping TypeName="CTMModel.SiteEventDetail">
+        <MappingFragment StoreEntitySet="SiteEventDetail">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />
+          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+          <ScalarProperty Name="IVRNo" ColumnName="IVRNo" />
+          <ScalarProperty Name="EventStatusId" ColumnName="EventStatusId" />
+          <ScalarProperty Name="ReferalStatusId" ColumnName="ReferalStatusId" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+          <ScalarProperty Name="SiteEventTypeId" ColumnName="SiteEventTypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReferalEventStatus">
+      <EntityTypeMapping TypeName="CTMModel.ReferalEventStatu">
+        <MappingFragment StoreEntitySet="ReferalEventStatus">
+          <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReferalApointmentTypes">
+      <EntityTypeMapping TypeName="CTMModel.ReferalApointmentType">
+        <MappingFragment StoreEntitySet="ReferalApointmentType">
+          <ScalarProperty Name="ApointMentType" ColumnName="ApointMentType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReferalApointments">
+      <EntityTypeMapping TypeName="CTMModel.ReferalApointment">
+        <MappingFragment StoreEntitySet="ReferalApointments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
+          <ScalarProperty Name="AppointmentTypeId" ColumnName="AppointmentTypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_site_GetReferalsApointments" FunctionName="CTMModel.Store.sp_site_GetReferalsApointments">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CTMModel.sp_site_GetReferalsApointments_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AppointmentTypeId" ColumnName="AppointmentTypeId" />
+          <ScalarProperty Name="ApointmentDate" ColumnName="ApointmentDate" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ApointMentType" ColumnName="ApointMentType" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
