@@ -27,6 +27,8 @@
         <AssociationConnector Association="CTMModel.FK_ReferalApointments_PatientReferalMapping" />
         <AssociationConnector Association="CTMModel.FK_ReferalPreQualificationDetail_PatientReferalMapping" />
         <AssociationConnector Association="CTMModel.FK_SiteEventDetail_PatientReferalMapping" />
+        <EntityTypeShape EntityType="CTMModel.SiteMaster" Width="1.5" PointX="0.75" PointY="9.875" />
+        <AssociationConnector Association="CTMModel.FK_StudySiteReferalMapping_SiteMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

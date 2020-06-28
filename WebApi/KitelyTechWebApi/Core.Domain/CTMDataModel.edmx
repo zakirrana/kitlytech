@@ -15,12 +15,20 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="HomePhoneNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="CellPhoneNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="CareGiversName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CareGiverrsPhone" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PatientReferalMapping">
           <Key>
             <PropertyRef Name="ReferalId" />
           </Key>
-          <Property Name="ReferalId" Type="int" Nullable="false" />
+          <Property Name="ReferalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ReferalCode" Type="nvarchar" MaxLength="504" StoreGeneratedPattern="Computed" />
           <Property Name="StudyId" Type="int" />
           <Property Name="PatientId" Type="int" />
@@ -79,6 +87,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventType" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="SiteMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SiteAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="SiteReferalStatusReason">
           <Key>
             <PropertyRef Name="Id" />
@@ -91,7 +109,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudyCode" Type="nvarchar" MaxLength="505" StoreGeneratedPattern="Computed" />
           <Property Name="StudyTitle" Type="nvarchar" MaxLength="500" />
           <Property Name="StatusId" Type="int" />
@@ -112,7 +130,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudyId" Type="int" />
           <Property Name="SiteId" Type="int" />
           <Property Name="RefrelId" Type="int" />
@@ -231,6 +249,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudySiteReferalMapping_SiteMaster">
+          <End Role="SiteMaster" Type="Self.SiteMaster" Multiplicity="0..1" />
+          <End Role="StudySiteReferalMapping" Type="Self.StudySiteReferalMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudySiteReferalMapping">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StudySiteReferalMapping_Studies">
           <End Role="Studies" Type="Self.Studies" Multiplicity="0..1" />
           <End Role="StudySiteReferalMapping" Type="Self.StudySiteReferalMapping" Multiplicity="*" />
@@ -250,6 +280,10 @@
           <Parameter Name="FromRecord" Type="bigint" Mode="In" />
           <Parameter Name="ToRecord" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="sp_site_GetReferalsDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferalId" Type="int" Mode="In" />
+          <Parameter Name="StudyId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_site_GetStudiesBySiteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteID" Type="int" Mode="In" />
           <Parameter Name="Search" Type="nvarchar(max)" Mode="In" />
@@ -264,6 +298,7 @@
           <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteEventDetail" EntityType="Self.SiteEventDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteEventType" EntityType="Self.SiteEventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteMaster" EntityType="Self.SiteMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteReferalStatusReason" EntityType="Self.SiteReferalStatusReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Studies" EntityType="Self.Studies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyProtocol" EntityType="Self.StudyProtocol" Schema="dbo" store:Type="Tables" />
@@ -302,6 +337,10 @@
             <End Role="Studies" EntitySet="Studies" />
             <End Role="StudyProtocol" EntitySet="StudyProtocol" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudySiteReferalMapping_SiteMaster" Association="Self.FK_StudySiteReferalMapping_SiteMaster">
+            <End Role="SiteMaster" EntitySet="SiteMaster" />
+            <End Role="StudySiteReferalMapping" EntitySet="StudySiteReferalMapping" />
+          </AssociationSet>
           <AssociationSet Name="FK_StudySiteReferalMapping_Studies" Association="Self.FK_StudySiteReferalMapping_Studies">
             <End Role="Studies" EntitySet="Studies" />
             <End Role="StudySiteReferalMapping" EntitySet="StudySiteReferalMapping" />
@@ -322,6 +361,14 @@
           <Property Name="EmailAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="HomePhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PatientReferalMappings" Relationship="CTMModel.FK_PatientReferalMapping_PatientDetail" FromRole="PatientDetail" ToRole="PatientReferalMapping" />
+          <Property Name="CellPhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CareGiversName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CareGiverrsPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReferalApointment">
           <Key>
@@ -427,6 +474,7 @@
           <Property Name="RefrelId" Type="Int32" />
           <NavigationProperty Name="Study" Relationship="Self.FK_StudySiteReferalMapping_Studies" FromRole="StudySiteReferalMapping" ToRole="Studies" />
           <Property Name="ReferalStatusId" Type="Int32" />
+          <NavigationProperty Name="SiteMaster" Relationship="CTMModel.FK_StudySiteReferalMapping_SiteMaster" FromRole="StudySiteReferalMapping" ToRole="SiteMaster" />
         </EntityType>
         <EntityType Name="StudyStatu">
           <Key>
@@ -569,6 +617,15 @@
             <End Role="PatientReferalMapping" EntitySet="PatientReferalMappings" />
             <End Role="SiteEventDetail" EntitySet="SiteEventDetails" />
           </AssociationSet>
+          <EntitySet Name="SiteMasters" EntityType="CTMModel.SiteMaster" />
+          <AssociationSet Name="FK_StudySiteReferalMapping_SiteMaster" Association="CTMModel.FK_StudySiteReferalMapping_SiteMaster">
+            <End Role="SiteMaster" EntitySet="SiteMasters" />
+            <End Role="StudySiteReferalMapping" EntitySet="StudySiteReferalMappings" />
+          </AssociationSet>
+          <FunctionImport Name="sp_site_GetReferalsDetail" ReturnType="Collection(CTMModel.sp_site_GetReferalsDetail_Result)">
+            <Parameter Name="ReferalId" Mode="In" Type="Int32" />
+            <Parameter Name="StudyId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_site_GetStudiesBySiteId_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -654,6 +711,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SiteMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SiteAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudySiteReferalMappings" Relationship="CTMModel.FK_StudySiteReferalMapping_SiteMaster" FromRole="SiteMaster" ToRole="StudySiteReferalMapping" />
+        </EntityType>
+        <Association Name="FK_StudySiteReferalMapping_SiteMaster">
+          <End Type="CTMModel.SiteMaster" Role="SiteMaster" Multiplicity="0..1" />
+          <End Type="CTMModel.StudySiteReferalMapping" Role="StudySiteReferalMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudySiteReferalMapping">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_site_GetReferalsDetail_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="HomePhoneNumber" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CellPhoneNumber" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CareGiversName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CareGiverrsPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ReferalStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ReferalCode" Nullable="true" MaxLength="504" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -663,6 +761,14 @@
           <EntitySetMapping Name="PatientDetails">
             <EntityTypeMapping TypeName="CTMModel.PatientDetail">
               <MappingFragment StoreEntitySet="PatientDetail">
+                <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
+                <ScalarProperty Name="CareGiversName" ColumnName="CareGiversName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
@@ -834,6 +940,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SiteMasters">
+            <EntityTypeMapping TypeName="CTMModel.SiteMaster">
+              <MappingFragment StoreEntitySet="SiteMaster">
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SiteAddress" ColumnName="SiteAddress" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_site_GetReferalsDetail" FunctionName="CTMModel.Store.sp_site_GetReferalsDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CTMModel.sp_site_GetReferalsDetail_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="HomePhoneNumber" ColumnName="HomePhoneNumber" />
+                <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="CareGiversName" ColumnName="CareGiversName" />
+                <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
+                <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
+                <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

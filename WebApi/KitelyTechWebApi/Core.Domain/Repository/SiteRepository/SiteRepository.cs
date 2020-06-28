@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Repository.SiteRepository
 {
-   public class SiteRepository
+    public class SiteRepository
     {
         private _IAllRepository<Study> istudyobject;
         private CTMEntities dbContext;
         public SiteRepository()
         {
             this.istudyobject = new AllRepository<Study>();
-            this.dbContext= new CTMEntities();
+            this.dbContext = new CTMEntities();
         }
         public IEnumerable<Study> GetStudiesAll()
         {
             return this.istudyobject.GetModel();
         }
 
-        public List<StudyModel> GeStudiesBySiteId(int siteId,string serach,int from,int to)
+        public List<StudyModel> GeStudiesBySiteId(int siteId, string serach, int from, int to)
         {
-            List<StudyModel> result=new List<StudyModel>() ;
-            var data = dbContext.sp_site_GetStudiesBySiteId(siteId,serach,from,to).ToList();
+            List<StudyModel> result = new List<StudyModel>();
+            var data = dbContext.sp_site_GetStudiesBySiteId(siteId, serach, from, to).ToList();
             if (data != null && data.Count > 0)
             {
                 foreach (var value in data)
@@ -47,21 +47,21 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
-        public List<ReferalModel> GeReferalByStudyId(int siteId,int studyId, string serach, int from, int to)
+        public List<ReferalModel> GeReferalByStudyId(int siteId, int studyId, string serach, int from, int to)
         {
             List<ReferalModel> result = new List<ReferalModel>();
-            var data = dbContext.sp_site_GetReferalsByStudyId(siteId,studyId, serach, from, to).ToList();
+            var data = dbContext.sp_site_GetReferalsByStudyId(siteId, studyId, serach, from, to).ToList();
             if (data != null && data.Count > 0)
             {
                 foreach (var value in data)
                 {
-                    ReferalModel objref= new ReferalModel();
-                    objref.ReferalId = value.RefrelId??0;
-                    objref.ReferalCode=value.ReferalCode;
-                    objref.SiteId = value.SiteId??0;
+                    ReferalModel objref = new ReferalModel();
+                    objref.ReferalId = value.RefrelId ?? 0;
+                    objref.ReferalCode = value.ReferalCode;
+                    objref.SiteId = value.SiteId ?? 0;
                     objref.Status = value.ReferalStatus;
-                    objref.StatusId = value.ReferalStatusId??0;
-                    objref.StudyId = value.StudyId??0;
+                    objref.StatusId = value.ReferalStatusId ?? 0;
+                    objref.StudyId = value.StudyId ?? 0;
                     result.Add(objref);
 
                 }
@@ -70,6 +70,38 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
+        public ReferalModel GeReferalDetail(int referalId, int studyId)
+        {
+            ReferalModel result = new ReferalModel();
+            var data = dbContext.sp_site_GetReferalsDetail(referalId, studyId).FirstOrDefault();
+            if (data != null)
+            {
 
+                ReferalModel objref = new ReferalModel();
+                objref.ReferalId = data.Id;
+                objref.ReferalCode = data.ReferalCode;
+                objref.FirstName = data.FirstName;
+                objref.MiddleName = data.MiddleName;
+                objref.LastName = data.LastName;
+                objref.HomePhoneNumber = data.HomePhoneNumber;
+                objref.State = data.State;
+                objref.Zip = data.Zip;
+                objref.EmailAddress = data.EmailAddress;
+                objref.Country = data.Country;
+                objref.City = data.City;
+                objref.CellPhoneNumber = data.CellPhoneNumber;
+                objref.CareGiversName = data.CareGiversName;
+                objref.CareGiverrsPhone = data.CareGiverrsPhone;
+                objref.Address = data.Address;
+                objref.Status = data.ReferalStatus;
+
+                result = objref;
+
+
+            }
+            return result;
+
+
+        }
     }
 }

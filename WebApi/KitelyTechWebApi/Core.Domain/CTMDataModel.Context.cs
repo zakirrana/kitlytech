@@ -40,6 +40,7 @@ namespace Core.Domain
         public virtual DbSet<StudyStatu> StudyStatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<PatientReferalMapping> PatientReferalMappings { get; set; }
+        public virtual DbSet<SiteMaster> SiteMasters { get; set; }
     
         public virtual ObjectResult<sp_site_GetStudiesBySiteId_Result> sp_site_GetStudiesBySiteId(Nullable<int> siteID, string search, Nullable<long> fromRecord, Nullable<long> toRecord)
         {
@@ -85,6 +86,19 @@ namespace Core.Domain
                 new ObjectParameter("ToRecord", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetReferalsByStudyId_Result>("sp_site_GetReferalsByStudyId", siteIdParameter, studyIdParameter, searchParameter, fromRecordParameter, toRecordParameter);
+        }
+    
+        public virtual ObjectResult<sp_site_GetReferalsDetail_Result> sp_site_GetReferalsDetail(Nullable<int> referalId, Nullable<int> studyId)
+        {
+            var referalIdParameter = referalId.HasValue ?
+                new ObjectParameter("ReferalId", referalId) :
+                new ObjectParameter("ReferalId", typeof(int));
+    
+            var studyIdParameter = studyId.HasValue ?
+                new ObjectParameter("StudyId", studyId) :
+                new ObjectParameter("StudyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_site_GetReferalsDetail_Result>("sp_site_GetReferalsDetail", referalIdParameter, studyIdParameter);
         }
     }
 }

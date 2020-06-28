@@ -10,16 +10,9 @@
 namespace Core.Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PatientDetail
+    public partial class sp_site_GetReferalsDetail_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PatientDetail()
-        {
-            this.PatientReferalMappings = new HashSet<PatientReferalMapping>();
-        }
-    
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -34,8 +27,7 @@ namespace Core.Domain
         public string Country { get; set; }
         public string CareGiversName { get; set; }
         public string CareGiverrsPhone { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PatientReferalMapping> PatientReferalMappings { get; set; }
+        public string ReferalStatus { get; set; }
+        public string ReferalCode { get; set; }
     }
 }

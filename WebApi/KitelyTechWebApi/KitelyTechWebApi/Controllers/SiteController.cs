@@ -37,28 +37,49 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
-            public string GetReferalsByStudy(int siteId,int studyId, string search, int from, int to)
+        public string GetReferalsByStudy(int siteId, int studyId, string search, int from, int to)
+        {
+
+
+            var result = new DataServiceResult<List<ReferalModel>>();
+            try
             {
-
-
-                var result = new DataServiceResult<List<ReferalModel>>();
-                try
+                var data = siterepo.GeReferalByStudyId(siteId, studyId, search, from, to);
+                if (data != null)
                 {
-                    var data = siterepo.GeReferalByStudyId(siteId,studyId,search,from,to);
-                    if (data != null)
-                    {
-                        result.Success = true;
-                        result.Value = data;
-
-                    }
+                    result.Success = true;
+                    result.Value = data;
 
                 }
-                catch (Exception ex)
-                {
-                    result.Success = false;
-                    result.ExceptionInfo = new ExceptionInfo(ex);
-                }
-                return JsonConvert.SerializeObject(result);
+
             }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
         }
+        public string GetReferalsDetail(int referalId, int studyId)
+        {
+            var result = new DataServiceResult<ReferalModel>();
+            try
+            {
+                var data = siterepo.GeReferalDetail(referalId,studyId);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+    }
 }

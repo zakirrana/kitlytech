@@ -20,4 +20,3 @@ E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csproj.CopyComplete
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.pdb
-E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csprojAssemblyReference.cache

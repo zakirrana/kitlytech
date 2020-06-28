@@ -94,10 +94,16 @@
     <Compile Include="SiteEventType.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SiteMaster.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SiteReferalStatusReason.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetReferalsByStudyId_Result.cs">
+      <DependentUpon>CTMDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_site_GetReferalsDetail_Result.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_site_GetStudiesBySiteId_Result.cs">

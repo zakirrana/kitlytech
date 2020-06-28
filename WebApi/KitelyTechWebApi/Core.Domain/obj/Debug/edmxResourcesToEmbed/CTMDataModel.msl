@@ -4,6 +4,14 @@
     <EntitySetMapping Name="PatientDetails">
       <EntityTypeMapping TypeName="CTMModel.PatientDetail">
         <MappingFragment StoreEntitySet="PatientDetail">
+          <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
+          <ScalarProperty Name="CareGiversName" ColumnName="CareGiversName" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
@@ -175,5 +183,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SiteMasters">
+      <EntityTypeMapping TypeName="CTMModel.SiteMaster">
+        <MappingFragment StoreEntitySet="SiteMaster">
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SiteAddress" ColumnName="SiteAddress" />
+          <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_site_GetReferalsDetail" FunctionName="CTMModel.Store.sp_site_GetReferalsDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CTMModel.sp_site_GetReferalsDetail_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="HomePhoneNumber" ColumnName="HomePhoneNumber" />
+          <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="CareGiversName" ColumnName="CareGiversName" />
+          <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
+          <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
+          <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
