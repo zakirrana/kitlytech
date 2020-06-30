@@ -120,6 +120,7 @@
     <EntitySetMapping Name="ReferalEventDetails">
       <EntityTypeMapping TypeName="CTMModel.ReferalEventDetail">
         <MappingFragment StoreEntitySet="ReferalEventDetail">
+          <ScalarProperty Name="ApointMentId" ColumnName="ApointMentId" />
           <ScalarProperty Name="ReferalStatusResonId" ColumnName="ReferalStatusResonId" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />

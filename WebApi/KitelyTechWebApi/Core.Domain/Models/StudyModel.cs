@@ -8,6 +8,11 @@ namespace Core.Domain.Models
 {
     public class StudyModel
     {
+        public StudyModel()
+        {
+            Audit = new CommonAudit();
+        }
+
         public int Id { get; set; }
         public string StudyTitle { get; set; }
         public int StatusId { get; set; }

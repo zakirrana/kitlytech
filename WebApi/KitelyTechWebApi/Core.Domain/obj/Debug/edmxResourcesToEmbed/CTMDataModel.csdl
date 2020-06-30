@@ -200,6 +200,7 @@
     <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="ReferalEventDetail" ToRole="PatientReferalMapping" />
     <NavigationProperty Name="ReferalEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="ReferalEventDetail" ToRole="ReferalEventType" />
     <Property Name="ReferalStatusResonId" Type="Int32" />
+    <Property Name="ApointMentId" Type="Int32" />
   </EntityType>
   <EntityType Name="ReferalEventStatu">
     <Key>

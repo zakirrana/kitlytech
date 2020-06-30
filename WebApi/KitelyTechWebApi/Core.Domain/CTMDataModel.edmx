@@ -66,6 +66,7 @@
           <Property Name="ApplicableProtocolid" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ReferalStatusResonId" Type="int" />
+          <Property Name="ApointMentId" Type="int" />
         </EntityType>
         <EntityType Name="ReferalEventStatus">
           <Key>
@@ -573,6 +574,7 @@
           <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_SiteEventDetail_PatientReferalMapping" FromRole="ReferalEventDetail" ToRole="PatientReferalMapping" />
           <NavigationProperty Name="ReferalEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="ReferalEventDetail" ToRole="ReferalEventType" />
           <Property Name="ReferalStatusResonId" Type="Int32" />
+          <Property Name="ApointMentId" Type="Int32" />
         </EntityType>
         <EntityType Name="ReferalEventStatu">
           <Key>
@@ -950,6 +952,7 @@
           <EntitySetMapping Name="ReferalEventDetails">
             <EntityTypeMapping TypeName="CTMModel.ReferalEventDetail">
               <MappingFragment StoreEntitySet="ReferalEventDetail">
+                <ScalarProperty Name="ApointMentId" ColumnName="ApointMentId" />
                 <ScalarProperty Name="ReferalStatusResonId" ColumnName="ReferalStatusResonId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ApplicableProtocolid" ColumnName="ApplicableProtocolid" />

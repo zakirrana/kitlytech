@@ -230,6 +230,13 @@ namespace Core.Domain.Repository.SiteRepository
            
 
         }
+        public ReferalEventDetail GetEventDetailByApintmentId(int apointmentId)
+        {
+
+            return dbContext.ReferalEventDetails.Where(row => row.ApointMentId == apointmentId).FirstOrDefault();
+
+
+        }
         public void SaveEvents(ReferalEventDetail model, int siteId, int studyId)
         {
             var repo = new AllRepository<ReferalEventDetail>();

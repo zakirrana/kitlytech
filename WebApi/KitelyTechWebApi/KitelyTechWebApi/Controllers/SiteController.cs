@@ -239,6 +239,27 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        public string GetEventDetailByApintmentId(int apointmentId)
+        { 
+            var result = new DataServiceResult<ReferalEventDetail>();
+            try
+            {
+                var data = siterepo.GetEventDetailByApintmentId(apointmentId);
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
         [HttpPost]
         public string SaveEventsDetail(string model,int siteId,int studyId)
         {
@@ -325,7 +346,6 @@ namespace KitelyTechWebApi.Controllers
                     result.Value = data;
 
                 }
-
             }
             catch (Exception ex)
             {
@@ -334,5 +354,6 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+      
     }
 }
