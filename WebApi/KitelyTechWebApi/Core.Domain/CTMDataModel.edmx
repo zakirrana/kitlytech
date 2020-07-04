@@ -495,6 +495,8 @@
           <Property Type="String" Name="CareGiverrsPhone" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="ReferalStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ReferalCode" Nullable="true" MaxLength="504" />
+          <Property Type="Int32" Name="StudyId" Nullable="true" />
+          <Property Type="Int32" Name="SiteId" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_site_GetReferalsApointments_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -883,6 +885,8 @@
                 <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
                 <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
                 <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+                <ScalarProperty Name="StudyId" ColumnName="StudyId" />
+                <ScalarProperty Name="SiteId" ColumnName="SiteId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -51,6 +51,8 @@
           <ScalarProperty Name="CareGiverrsPhone" ColumnName="CareGiverrsPhone" />
           <ScalarProperty Name="ReferalStatus" ColumnName="ReferalStatus" />
           <ScalarProperty Name="ReferalCode" ColumnName="ReferalCode" />
+          <ScalarProperty Name="StudyId" ColumnName="StudyId" />
+          <ScalarProperty Name="SiteId" ColumnName="SiteId" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

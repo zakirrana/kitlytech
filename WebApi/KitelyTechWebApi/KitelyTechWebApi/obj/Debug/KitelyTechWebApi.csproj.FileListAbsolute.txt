@@ -130,6 +130,7 @@ E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\roslyn
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\roslyn\VBCSCompiler.exe
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\roslyn\VBCSCompiler.exe.config
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Core.Domain.dll
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\EntityFramework.SqlServer.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.Web.Infrastructure.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Newtonsoft.Json.dll
@@ -145,13 +146,14 @@ E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\EntityFramework.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Core.Domain.pdb
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Core.Domain.dll.config
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\EntityFramework.SqlServer.xml
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Newtonsoft.Json.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Razor.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Webpages.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Webpages.Deployment.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Webpages.Razor.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Helpers.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Mvc.xml
-E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Newtonsoft.Json.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Net.Http.Formatting.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Http.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.Web.Http.WebHost.xml
@@ -162,5 +164,11 @@ E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\obj\Debug\
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\obj\Debug\KitelyTechWebApi.csproj.CopyComplete
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\obj\Debug\KitelyTechWebApi.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\obj\Debug\KitelyTechWebApi.pdb
-E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\EntityFramework.SqlServer.dll
-E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\EntityFramework.SqlServer.xml
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.Logging.dll
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.Tokens.dll
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.IdentityModel.Tokens.Jwt.dll
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.Logging.xml
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\Microsoft.IdentityModel.Tokens.xml
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\KitelyTechWebApi\bin\System.IdentityModel.Tokens.Jwt.xml

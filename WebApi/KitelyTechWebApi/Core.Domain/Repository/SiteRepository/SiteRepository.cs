@@ -15,6 +15,7 @@ namespace Core.Domain.Repository.SiteRepository
         {
             this.istudyobject = new AllRepository<Study>();
             this.dbContext = new CTMEntities();
+            dbContext.Configuration.LazyLoadingEnabled = false;
         }
         public IEnumerable<Study> GetStudiesAll()
         {
@@ -79,6 +80,8 @@ namespace Core.Domain.Repository.SiteRepository
 
                 ReferalModel objref = new ReferalModel();
                 objref.ReferalId = data.Id;
+                objref.StudyId = data.StudyId ?? 0;
+                objref.SiteId = data.SiteId??0;
                 objref.ReferalCode = data.ReferalCode;
                 objref.FirstName = data.FirstName;
                 objref.MiddleName = data.MiddleName;
@@ -106,7 +109,7 @@ namespace Core.Domain.Repository.SiteRepository
         public List<AppointmentType> GetApintMentTypeCombo()
         {
             List<AppointmentType> result = new List<AppointmentType>();
-            var data = dbContext.ReferalApointmentTypes.ToList();
+            var data = dbContext.ReferalApointmentTypes.AsNoTracking().ToList();
             if (data != null && data.Count > 0)
             {
                 foreach (var value in data)
@@ -148,7 +151,7 @@ namespace Core.Domain.Repository.SiteRepository
         public AppointmentDetail GetApintMentDetailById(int Id)
         {
             AppointmentDetail result = new AppointmentDetail();
-            var value = dbContext.ReferalApointments.Where(x=>x.Id==Id).FirstOrDefault();
+            var value = dbContext.ReferalApointments.AsNoTracking().Where(x=>x.Id==Id).FirstOrDefault();
             if (value != null)
             {
                 
@@ -226,14 +229,14 @@ namespace Core.Domain.Repository.SiteRepository
         public ReferalEventDetail GetEventDetailById(int Id)
         {
            
-            return dbContext.ReferalEventDetails.Where(row=>row.Id==Id).FirstOrDefault();
+            return dbContext.ReferalEventDetails.AsNoTracking().Where(row=>row.Id==Id).FirstOrDefault();
            
 
         }
         public ReferalEventDetail GetEventDetailByApintmentId(int apointmentId)
         {
 
-            return dbContext.ReferalEventDetails.Where(row => row.ApointMentId == apointmentId).FirstOrDefault();
+            return dbContext.ReferalEventDetails.AsNoTracking().Where(row => row.ApointMentId == apointmentId).FirstOrDefault();
 
 
         }
@@ -250,7 +253,7 @@ namespace Core.Domain.Repository.SiteRepository
 
             }
             repo.Save();
-            var value = dbContext.StudySiteReferalMappings.Where(row => row.RefrelId == model.ReferalId && row.SiteId == siteId && row.StudyId == studyId).FirstOrDefault();
+            var value = dbContext.StudySiteReferalMappings.AsNoTracking().Where(row => row.RefrelId == model.ReferalId && row.SiteId == siteId && row.StudyId == studyId).FirstOrDefault();
             if(value!=null)
             {
                 value.ReferalStatusId = model.ReferalStatusId;
@@ -271,18 +274,19 @@ namespace Core.Domain.Repository.SiteRepository
 
         public EventsCombo GetEventsCombo()
         {
+           
             var eventcombos = new EventsCombo();
-            eventcombos.referalStatus = dbContext.ReferalStatus.ToList();
-            eventcombos.referalStatusReson = dbContext.SiteReferalStatusReasons.ToList();
-            eventcombos.eventTypes = dbContext.ReferalEventTypes.ToList();
-            eventcombos.referalEventStatus = dbContext.ReferalEventStatus.ToList();
+            eventcombos.referalStatus = dbContext.ReferalStatus.AsNoTracking().ToList();
+            eventcombos.referalStatusReson = dbContext.SiteReferalStatusReasons.AsNoTracking().ToList();
+            eventcombos.eventTypes = dbContext.ReferalEventTypes.AsNoTracking().ToList();
+            eventcombos.referalEventStatus = dbContext.ReferalEventStatus.AsNoTracking().ToList();
             return eventcombos;
 
         }
 
         public List<StudyProtocol> GetApplicableProtocol(int studyId)
         {
-            return dbContext.StudyProtocols.Where(row=>row.StudyId==studyId).ToList();
+            return dbContext.StudyProtocols.AsNoTracking().Where(row=>row.StudyId==studyId).ToList();
         }
 
        

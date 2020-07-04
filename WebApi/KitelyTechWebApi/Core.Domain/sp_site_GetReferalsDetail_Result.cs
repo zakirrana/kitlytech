@@ -29,5 +29,7 @@ namespace Core.Domain
         public string CareGiverrsPhone { get; set; }
         public string ReferalStatus { get; set; }
         public string ReferalCode { get; set; }
+        public Nullable<int> StudyId { get; set; }
+        public Nullable<int> SiteId { get; set; }
     }
 }

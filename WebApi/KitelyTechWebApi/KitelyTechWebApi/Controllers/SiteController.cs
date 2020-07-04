@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Helpers;
 using System.Web.Http;
 
 namespace KitelyTechWebApi.Controllers
@@ -14,6 +15,8 @@ namespace KitelyTechWebApi.Controllers
     public class SiteController : ApiController
     {
         private SiteRepository siterepo = new SiteRepository();
+
+
         public string GetStudiesBySite(int siteId, string search, int from, int to)
         {
 
@@ -145,18 +148,39 @@ namespace KitelyTechWebApi.Controllers
             return JsonConvert.SerializeObject(result);
         }
         [HttpPost]
-        public string SaveApointMentDetail(string model)
+        public string SaveApointMentDetail(ReferalApointment model)
         {
             var result = new DataServiceResult<ReferalApointment>();
             try
             {
-                var dataModel = JsonConvert.DeserializeObject<ReferalApointment>(model);
-                if (dataModel != null)
+               
+                    //JsonConvert.DeserializeObject<ReferalApointment>(model.ToString());
+                if (model != null)
                 {
-                    siterepo.SaveApointMent(dataModel);
+                    if (model.ReferalId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Referal id is required fields";
+                    }
+                    else if (model.AppointmentTypeId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Please select apointment type";
+                    }
+                    else if(model.ApointmentDate==null && model.ApointmentDate<DateTime.Now.Date)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Apontment date should be greter then current date";
+                    }
+                    else
+                    {
+                        model.CreatedOn = DateTime.Now.Date;
+                        siterepo.SaveApointMent(model);
 
-                    result.Success = true;
-                    result.Value = dataModel;
+                        result.Success = true;
+                        result.Value = model;
+                    }
+                    
                 }
                 else
                 {
@@ -237,6 +261,7 @@ namespace KitelyTechWebApi.Controllers
                 result.Success = false;
                 result.ExceptionInfo = new ExceptionInfo(ex);
             }
+            
             return JsonConvert.SerializeObject(result);
         }
         public string GetEventDetailByApintmentId(int apointmentId)
@@ -261,23 +286,59 @@ namespace KitelyTechWebApi.Controllers
             return JsonConvert.SerializeObject(result);
         }
         [HttpPost]
-        public string SaveEventsDetail(string model,int siteId,int studyId)
+        public string SaveEventsDetail(ReferalEventDetail model,int siteId,int studyId)
         {
             var result = new DataServiceResult<ReferalEventDetail>();
             try
             {
-                var dataModel = JsonConvert.DeserializeObject<ReferalEventDetail>(model);
-                if (dataModel != null)
+                
+                if (model != null)
                 {
-                    siterepo.SaveEvents(dataModel,siteId,studyId);
 
-                    result.Success = true;
-                    result.Value = dataModel;
+                    if (model.EventTypeId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Event type is required";
+                    }
+                    else if (model.EventStatusId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Event status is required";
+                    }
+                    else if (model.EventDate == null)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Event date is required";
+                    }
+                    else if (model.ReferalStatusId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Refere status is required";
+                    }
+                    else if (model.ReferalId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Referal id is required";
+                    }
+                    else if (model.ReferalStatusResonId == 0)
+                    {
+                        result.Success = false;
+                        result.ResultMessage = "Referal status resion is required";
+                    }
+                    else
+                    {
+                        model.CreatedOn = DateTime.Now.Date;
+                        siterepo.SaveEvents(model, siteId, studyId);
+
+                        result.Success = true;
+                        result.Value = model;
+                    }
                 }
                 else
                 {
-                    result.Success = true;
-                    result.ResultMessage = "Failed to convert json model";
+
+                    result.Success = false;
+                    result.ResultMessage = "model is null";
                 }
 
 
@@ -312,6 +373,7 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        [HttpGet]
         public string GetEventcombos()
         {
             var result = new DataServiceResult<EventsCombo>();
@@ -331,6 +393,12 @@ namespace KitelyTechWebApi.Controllers
                 result.Success = false;
                 result.ExceptionInfo = new ExceptionInfo(ex);
             }
+            //to emit reference loop
+            var setting = new JsonSerializerSettings
+            {
+                Formatting = Newtonsoft.Json.Formatting.Indented, // Just for humans
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
             return JsonConvert.SerializeObject(result);
         }
 
