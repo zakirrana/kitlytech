@@ -22,10 +22,10 @@ namespace Core.Domain.Repository.SiteRepository
             return this.istudyobject.GetModel();
         }
 
-        public List<StudyModel> GeStudiesBySiteId(int siteId, string serach, int from, int to)
+        public List<StudyModel> GeStudiesBySiteId(int siteId, string search, int from, int to)
         {
             List<StudyModel> result = new List<StudyModel>();
-            var data = dbContext.sp_site_GetStudiesBySiteId(siteId, serach, from, to).ToList();
+            var data = dbContext.sp_site_GetStudiesBySiteId(siteId, search, from, to).ToList();
             if (data != null && data.Count > 0)
             {
                 foreach (var value in data)
@@ -48,10 +48,11 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
-        public List<ReferalModel> GeReferalByStudyId(int siteId, int studyId, string serach, int from, int to)
+       
+        public List<ReferalModel> GeReferalByStudyId(int siteId, int studyId, string search, int from, int to)
         {
             List<ReferalModel> result = new List<ReferalModel>();
-            var data = dbContext.sp_site_GetReferalsByStudyId(siteId, studyId, serach, from, to).ToList();
+            var data = dbContext.sp_site_GetReferalsByStudyId(siteId, studyId, search, from, to).ToList();
             if (data != null && data.Count > 0)
             {
                 foreach (var value in data)
@@ -116,6 +117,7 @@ namespace Core.Domain.Repository.SiteRepository
                 {
                     AppointmentType objetype = new AppointmentType();
                     objetype.Id = value.Id;
+                    objetype.Type = value.ApointMentType;
                     result.Add(objetype);
 
                 }
@@ -140,6 +142,7 @@ namespace Core.Domain.Repository.SiteRepository
                     objapt.Date = value.ApointmentDate;
                     objapt.CreatedOn = value.CreatedOn;
                     objapt.Notes = value.Note;
+                    objapt.EventId = value.EventId??0;
                     result.Add(objapt);
 
                 }
@@ -154,18 +157,12 @@ namespace Core.Domain.Repository.SiteRepository
             var value = dbContext.ReferalApointments.AsNoTracking().Where(x=>x.Id==Id).FirstOrDefault();
             if (value != null)
             {
-                
-                    AppointmentDetail objapt = new AppointmentDetail();
-                    objapt.Id = value.Id;
-                    objapt.referalId = value.ReferalId ?? 0;
-                    objapt.ApintMentTypeId = value.AppointmentTypeId ?? 0;
-                  
-                    objapt.Date = value.ApointmentDate;
-                    objapt.CreatedOn = value.CreatedOn;
-                    objapt.Notes = value.Note;
-                   
-
-               
+                result.Id = value.Id;
+                result.referalId = value.ReferalId ?? 0;
+                result.ApintMentTypeId = value.AppointmentTypeId ?? 0;
+                result.Date = value.ApointmentDate;
+                result.CreatedOn = value.CreatedOn;
+                result.Notes = value.Note;
             }
             return result;
 
@@ -233,10 +230,10 @@ namespace Core.Domain.Repository.SiteRepository
            
 
         }
-        public ReferalEventDetail GetEventDetailByApintmentId(int apointmentId)
+        public List<ReferalEventDetail> GetEventDetailByApintmentId(int apointmentId)
         {
 
-            return dbContext.ReferalEventDetails.AsNoTracking().Where(row => row.ApointMentId == apointmentId).FirstOrDefault();
+            return dbContext.ReferalEventDetails.AsNoTracking().Where(row => row.ApointMentId == apointmentId).ToList();
 
 
         }

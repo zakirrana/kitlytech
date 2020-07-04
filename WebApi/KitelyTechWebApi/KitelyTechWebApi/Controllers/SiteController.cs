@@ -199,6 +199,7 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        [HttpGet]
         public string DeleteApointMent(int Id)
         {
             var result = new DataServiceResult();
@@ -266,7 +267,7 @@ namespace KitelyTechWebApi.Controllers
         }
         public string GetEventDetailByApintmentId(int apointmentId)
         { 
-            var result = new DataServiceResult<ReferalEventDetail>();
+            var result = new DataServiceResult<List<ReferalEventDetail>>();
             try
             {
                 var data = siterepo.GetEventDetailByApintmentId(apointmentId);
@@ -320,11 +321,7 @@ namespace KitelyTechWebApi.Controllers
                         result.Success = false;
                         result.ResultMessage = "Referal id is required";
                     }
-                    else if (model.ReferalStatusResonId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Referal status resion is required";
-                    }
+                    
                     else
                     {
                         model.CreatedOn = DateTime.Now.Date;
@@ -352,6 +349,7 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+        [HttpGet]
         public string DeleteEvent(int Id)
         {
             var result = new DataServiceResult();

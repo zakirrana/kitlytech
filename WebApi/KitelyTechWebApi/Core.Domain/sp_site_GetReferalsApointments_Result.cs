@@ -20,5 +20,6 @@ namespace Core.Domain
         public Nullable<int> ReferalId { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string ApointMentType { get; set; }
+        public Nullable<int> EventId { get; set; }
     }
 }

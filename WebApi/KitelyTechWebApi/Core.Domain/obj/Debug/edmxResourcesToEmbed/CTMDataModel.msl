@@ -66,6 +66,7 @@
           <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="ApointMentType" ColumnName="ApointMentType" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

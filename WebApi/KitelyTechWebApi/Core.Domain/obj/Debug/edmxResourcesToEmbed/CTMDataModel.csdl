@@ -132,6 +132,7 @@
     <Property Type="Int32" Name="ReferalId" Nullable="true" />
     <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
     <Property Type="String" Name="ApointMentType" Nullable="true" MaxLength="250" />
+    <Property Type="Int32" Name="EventId" Nullable="true" />
   </ComplexType>
   <EntityType Name="PatientDetail">
     <Key>

@@ -16,8 +16,8 @@ E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\Entit
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.SqlServer.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.xml
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\bin\Debug\EntityFramework.SqlServer.xml
-E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csprojAssemblyReference.cache
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csproj.CoreCompileInputs.cache
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csproj.CopyComplete
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.dll
 E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.pdb
+E:\Ronak\22-6-2020\kitlytech\WebApi\KitelyTechWebApi\Core.Domain\obj\Debug\Core.Domain.csprojAssemblyReference.cache

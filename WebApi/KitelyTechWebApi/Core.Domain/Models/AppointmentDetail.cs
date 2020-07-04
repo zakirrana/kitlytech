@@ -15,6 +15,7 @@ namespace Core.Domain.Models
         public string Notes { get; set; }
         public int referalId { get; set; }
         public DateTime ? CreatedOn { get; set; }
+        public int EventId { get; set; }
        
     }
 }
