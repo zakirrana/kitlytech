@@ -72,6 +72,7 @@
     <Compile Include="Models\EventDetails.cs" />
     <Compile Include="Models\EventsCombo.cs" />
     <Compile Include="Models\ReferalModel.cs" />
+    <Compile Include="Models\SendEmailModel.cs" />
     <Compile Include="Models\StudyModel.cs" />
     <Compile Include="PatientDetail.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
@@ -140,6 +141,7 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utility\EmailHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CTMDataModel.edmx">
