@@ -12,10 +12,11 @@ namespace Core.Domain.Models
         public string to { get; set; }
         public string from { get; set; }
         public string emailBody { get; set; }
-
+        public int MessageType { get; set; }
         public string subject { get; set; }
         public string bcc { get; set; }
         public string cc { get; set; }
         public bool isHtml { get; set; }
+        public string reciver { get; set; }
     }
 }

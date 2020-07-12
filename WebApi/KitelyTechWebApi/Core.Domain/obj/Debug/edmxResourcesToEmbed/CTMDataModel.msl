@@ -180,6 +180,7 @@
     <EntitySetMapping Name="SiteMasters">
       <EntityTypeMapping TypeName="CTMModel.SiteMaster">
         <MappingFragment StoreEntitySet="SiteMaster">
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="SiteAddress" ColumnName="SiteAddress" />
@@ -272,5 +273,22 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="SendSmsOrEmails">
+      <EntityTypeMapping TypeName="CTMModel.SendSmsOrEmail">
+        <MappingFragment StoreEntitySet="SendSmsOrEmail">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="isMessagesent" ColumnName="isMessagesent" />
+          <ScalarProperty Name="AttachementPath" ColumnName="AttachementPath" />
+          <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+          <ScalarProperty Name="MessageDate" ColumnName="MessageDate" />
+          <ScalarProperty Name="MessgeType" ColumnName="MessgeType" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="MessageReciver" ColumnName="MessageReciver" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

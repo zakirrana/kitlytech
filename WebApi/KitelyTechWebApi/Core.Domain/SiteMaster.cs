@@ -25,6 +25,7 @@ namespace Core.Domain
         public string SiteAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string MobileNumber { get; set; }
+        public string EmailAddress { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudySiteReferalMapping> StudySiteReferalMappings { get; set; }

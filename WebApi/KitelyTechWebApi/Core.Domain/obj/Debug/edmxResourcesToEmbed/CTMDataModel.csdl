@@ -80,6 +80,7 @@
     <FunctionImport Name="sp_site_GetReferalsEvents" ReturnType="Collection(CTMModel.sp_site_GetReferalsEvents_Result)">
       <Parameter Name="ReferalId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="SendSmsOrEmails" EntityType="CTMModel.SendSmsOrEmail" />
   </EntityContainer>
   <ComplexType Name="sp_site_GetStudiesBySiteId_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -253,6 +254,7 @@
     <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="StudySiteReferalMappings" Relationship="CTMModel.FK_StudySiteReferalMapping_SiteMaster" FromRole="SiteMaster" ToRole="StudySiteReferalMapping" />
+    <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="SiteReferalStatusReason">
     <Key>
@@ -456,4 +458,20 @@
     <Property Type="Int32" Name="ReferalStatusResonId" Nullable="true" />
     <Property Type="String" Name="Reason" Nullable="true" MaxLength="500" />
   </ComplexType>
+  <EntityType Name="SendSmsOrEmail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MessageReciver" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="From" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="To" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MessgeType" Type="Int32" />
+    <Property Name="MessageDate" Type="DateTime" Precision="3" />
+    <Property Name="MessageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AttachementPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="isMessagesent" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

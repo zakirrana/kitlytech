@@ -98,6 +98,22 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="ReferalStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="SendSmsOrEmail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MessageReciver" Type="nvarchar" MaxLength="500" />
+    <Property Name="From" Type="nvarchar" MaxLength="200" />
+    <Property Name="To" Type="nvarchar(max)" />
+    <Property Name="MessgeType" Type="int" />
+    <Property Name="MessageDate" Type="datetime" />
+    <Property Name="MessageContent" Type="nvarchar(max)" />
+    <Property Name="AttachementPath" Type="nvarchar" MaxLength="255" />
+    <Property Name="isMessagesent" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
   <EntityType Name="SiteMaster">
     <Key>
       <PropertyRef Name="Id" />
@@ -107,6 +123,7 @@
     <Property Name="SiteAddress" Type="nvarchar" MaxLength="500" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
     <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="SiteReferalStatusReason">
     <Key>
@@ -317,6 +334,7 @@
     <EntitySet Name="ReferalEventType" EntityType="Self.ReferalEventType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalPreQualificationDetail" EntityType="Self.ReferalPreQualificationDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SendSmsOrEmail" EntityType="Self.SendSmsOrEmail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteMaster" EntityType="Self.SiteMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteReferalStatusReason" EntityType="Self.SiteReferalStatusReason" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Studies" EntityType="Self.Studies" Schema="dbo" store:Type="Tables" />

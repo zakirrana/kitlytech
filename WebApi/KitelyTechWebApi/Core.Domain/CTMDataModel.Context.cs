@@ -43,6 +43,7 @@ namespace Core.Domain
         public virtual DbSet<StudySiteReferalMapping> StudySiteReferalMappings { get; set; }
         public virtual DbSet<StudyStatu> StudyStatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<SendSmsOrEmail> SendSmsOrEmails { get; set; }
     
         public virtual ObjectResult<sp_site_GetStudiesBySiteId_Result> sp_site_GetStudiesBySiteId(Nullable<int> siteID, string search, Nullable<long> fromRecord, Nullable<long> toRecord)
         {

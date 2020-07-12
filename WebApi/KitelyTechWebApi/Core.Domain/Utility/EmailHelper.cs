@@ -25,28 +25,39 @@ namespace Core.Domain.Utility
         }
         public static void Send(SendEmailModel email)
         {
-            MailMessage message = new MailMessage();
-            SmtpClient smtpclient = new SmtpClient();
-            message.From = new MailAddress(email.from);
-            foreach (var to in email.to.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+            try
             {
-                message.To.Add(new MailAddress(to));
-            }
-            
-            message.Subject = email.subject;
-            message.IsBodyHtml = email.isHtml; //to make message body as html  
-            message.Body = email.emailBody;
-            smtpclient.Port = Convert.ToInt32(port);
-            smtpclient.Host = smtp; //for gmail host  
-            smtpclient.EnableSsl = true;
-            smtpclient.UseDefaultCredentials = true;
-            smtpclient.Credentials = new NetworkCredential(username, password);
-            smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpclient.Send(message);
+                MailMessage message = new MailMessage();
+                SmtpClient smtpclient = new SmtpClient();
+                message.From = new MailAddress(email.from);
+                foreach (var to in email.to.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    message.To.Add(new MailAddress(to));
+                }
 
+                message.Subject = email.subject;
+                message.IsBodyHtml = email.isHtml; //to make message body as html  
+                message.Body = email.emailBody;
+                smtpclient.Port = Convert.ToInt32(port);
+                smtpclient.Host = smtp; //for gmail host  
+                smtpclient.EnableSsl = true;
+                smtpclient.UseDefaultCredentials = true;
+                smtpclient.Credentials = new NetworkCredential(username, password);
+                smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpclient.Send(message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
 
+    }
+    public enum MessageType
+    {
+        Email=1,
+        SMS=2       
     }
 }

@@ -103,6 +103,22 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="ReferalStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="SendSmsOrEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageReciver" Type="nvarchar" MaxLength="500" />
+          <Property Name="From" Type="nvarchar" MaxLength="200" />
+          <Property Name="To" Type="nvarchar(max)" />
+          <Property Name="MessgeType" Type="int" />
+          <Property Name="MessageDate" Type="datetime" />
+          <Property Name="MessageContent" Type="nvarchar(max)" />
+          <Property Name="AttachementPath" Type="nvarchar" MaxLength="255" />
+          <Property Name="isMessagesent" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="SiteMaster">
           <Key>
             <PropertyRef Name="Id" />
@@ -112,6 +128,7 @@
           <Property Name="SiteAddress" Type="nvarchar" MaxLength="500" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="SiteReferalStatusReason">
           <Key>
@@ -322,6 +339,7 @@
           <EntitySet Name="ReferalEventType" EntityType="Self.ReferalEventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalPreQualificationDetail" EntityType="Self.ReferalPreQualificationDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferalStatus" EntityType="Self.ReferalStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SendSmsOrEmail" EntityType="Self.SendSmsOrEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteMaster" EntityType="Self.SiteMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteReferalStatusReason" EntityType="Self.SiteReferalStatusReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Studies" EntityType="Self.Studies" Schema="dbo" store:Type="Tables" />
@@ -454,6 +472,7 @@
           <FunctionImport Name="sp_site_GetReferalsEvents" ReturnType="Collection(CTMModel.sp_site_GetReferalsEvents_Result)">
           <Parameter Name="ReferalId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="SendSmsOrEmails" EntityType="CTMModel.SendSmsOrEmail" />
         </EntityContainer>
         <ComplexType Name="sp_site_GetStudiesBySiteId_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -627,6 +646,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StudySiteReferalMappings" Relationship="CTMModel.FK_StudySiteReferalMapping_SiteMaster" FromRole="SiteMaster" ToRole="StudySiteReferalMapping" />
+          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SiteReferalStatusReason">
           <Key>
@@ -830,6 +850,22 @@
           <Property Type="Int32" Name="ReferalStatusResonId" Nullable="true" />
           <Property Type="String" Name="Reason" Nullable="true" MaxLength="500" />
         </ComplexType>
+        <EntityType Name="SendSmsOrEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageReciver" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="To" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessgeType" Type="Int32" />
+          <Property Name="MessageDate" Type="DateTime" Precision="3" />
+          <Property Name="MessageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachementPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isMessagesent" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1015,6 +1051,7 @@
           <EntitySetMapping Name="SiteMasters">
             <EntityTypeMapping TypeName="CTMModel.SiteMaster">
               <MappingFragment StoreEntitySet="SiteMaster">
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="SiteAddress" ColumnName="SiteAddress" />
@@ -1107,6 +1144,23 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SendSmsOrEmails">
+            <EntityTypeMapping TypeName="CTMModel.SendSmsOrEmail">
+              <MappingFragment StoreEntitySet="SendSmsOrEmail">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="isMessagesent" ColumnName="isMessagesent" />
+                <ScalarProperty Name="AttachementPath" ColumnName="AttachementPath" />
+                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+                <ScalarProperty Name="MessageDate" ColumnName="MessageDate" />
+                <ScalarProperty Name="MessgeType" ColumnName="MessgeType" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="MessageReciver" ColumnName="MessageReciver" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

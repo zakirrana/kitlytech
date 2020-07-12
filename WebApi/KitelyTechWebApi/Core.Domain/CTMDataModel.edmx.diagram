@@ -31,6 +31,7 @@
         <AssociationConnector Association="CTMModel.FK_Studies_StudyStatus" />
         <AssociationConnector Association="CTMModel.FK_StudyProtocol_Studies" />
         <AssociationConnector Association="CTMModel.FK_StudySiteReferalMapping_Studies" />
+        <EntityTypeShape EntityType="CTMModel.SendSmsOrEmail" Width="1.5" PointX="10.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
