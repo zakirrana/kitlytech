@@ -31,5 +31,21 @@ namespace Core.Domain.Repository.CommonRepository
             repo.Save();
 
         }
+        public List<SendSmsOrEmail> GetSendSmsEmailList()
+        {
+            List<SendSmsOrEmail> result = new List<SendSmsOrEmail>();
+            return dbContext.SendSmsOrEmails.ToList();           
+
+        }
+        public void DeleteEmailSmsEntry(int Id)
+        {
+            var repo = new AllRepository<ReferalEventDetail>();
+            if (Id > 0)
+            {
+                repo.DeleteModel(Id);
+            }
+
+            repo.Save();
+        }
     }
 }

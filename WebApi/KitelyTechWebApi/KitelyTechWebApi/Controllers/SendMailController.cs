@@ -45,5 +45,48 @@ namespace KitelyTechWebApi.Controllers
             return JsonConvert.SerializeObject(result);
 
         }
+        public string GetSendSmsEmailList()
+        {
+            var result = new DataServiceResult<List<SendSmsOrEmail>>();
+            try
+            {
+                var data = emailrepo.GetSendSmsEmailList();
+                if (data != null)
+                {
+                    result.Success = true;
+                    result.Value = data;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+           
+            return JsonConvert.SerializeObject(result);
+        }
+        public string DeleteEmailSmsEntry(int Id)
+        {
+            var result = new DataServiceResult();
+            try
+            {
+                emailrepo.DeleteEmailSmsEntry(Id);
+
+                result.Success = true;
+                result.ResultMessage = "Deleted Successfully";
+
+
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ResultMessage = "Failed to delete Data";
+                result.ExceptionInfo = new ExceptionInfo(ex);
+            }
+            return JsonConvert.SerializeObject(result);
+        }
     }
 }

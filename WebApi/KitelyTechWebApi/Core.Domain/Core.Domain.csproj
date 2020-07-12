@@ -103,6 +103,7 @@
       <DependentUpon>CTMDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\AllRepository.cs" />
+    <Compile Include="Repository\CommonRepository\EmailSmsRepository.cs" />
     <Compile Include="Repository\SiteRepository\SiteRepository.cs" />
     <Compile Include="Repository\_IAllRepository.cs" />
     <Compile Include="SendSmsOrEmail.cs">
