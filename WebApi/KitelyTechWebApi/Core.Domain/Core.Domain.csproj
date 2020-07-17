@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DataServiceResult.cs" />
-    <Compile Include="Common\SearchParam.cs" />
+    <Compile Include="Common\SiteApiParameter.cs" />
     <Compile Include="CTMDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

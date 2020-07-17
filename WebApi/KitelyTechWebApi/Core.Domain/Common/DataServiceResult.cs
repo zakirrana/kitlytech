@@ -19,7 +19,7 @@ namespace Core.Domain
             get { return _resultCode; }
             set { _resultCode = value; Success = _resultCode == 0; }
         }
-
+        public IEnumerable<string> errors { get; set; }
         public string ResultMessage { get; set; }
         public ExceptionInfo ExceptionInfo { get; set; }
     }
@@ -50,7 +50,7 @@ namespace Core.Domain
             StackTrace = ex.StackTrace;
             FullString = ex.ToString();
         }
-
+      
         public string Message { get; set; }
         public string Source { get; set; }
         public string StackTrace { get; set; }

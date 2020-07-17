@@ -18,12 +18,10 @@ namespace KitelyTechWebApi.Controllers
     public class SiteController : ApiController
     {
         private SiteRepository siterepo = new SiteRepository();
- 
+
 
         public string GetStudiesBySite(SiteApiParameter model)
         {
-
-           
             var result = new DataServiceResult<List<StudyModel>>();
             try
             {
@@ -154,24 +152,17 @@ namespace KitelyTechWebApi.Controllers
             var result = new DataServiceResult<ReferalApointment>();
             try
             {
-               //ToDo:Model state check
-                    //JsonConvert.DeserializeObject<ReferalApointment>(model.ToString());
-                if (model != null)
+                //ToDo:Model state check
+                //JsonConvert.DeserializeObject<ReferalApointment>(model.ToString());
+                if (ModelState.IsValid)
                 {
-                    if (model.ReferalId == 0)
+
+                    
+                   if (model.ApointmentDate == null && model.ApointmentDate < DateTime.Now.Date)
                     {
                         result.Success = false;
-                        result.ResultMessage = "Referal id is required fields";
-                    }
-                    else if (model.AppointmentTypeId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Please select apointment type";
-                    }
-                    else if(model.ApointmentDate==null && model.ApointmentDate<DateTime.Now.Date)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Apontment date should be greter then current date";
+                        ModelState.AddModelError("ApointmentDate", "Apontment date should be greter then current date");
+                      
                     }
                     else
                     {
@@ -181,12 +172,13 @@ namespace KitelyTechWebApi.Controllers
                         result.Success = true;
                         result.Value = model;
                     }
-                    
+
                 }
                 else
                 {
-                    result.Success = true;
-                    result.ResultMessage = "Failed to convert json model";
+                    result.Success = false;
+                    result.ResultMessage = "Model is not valid";
+                    result.errors = ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage));
                 }
 
 
@@ -263,11 +255,11 @@ namespace KitelyTechWebApi.Controllers
                 result.Success = false;
                 result.ExceptionInfo = new ExceptionInfo(ex);
             }
-            
+
             return JsonConvert.SerializeObject(result);
         }
         public string GetEventDetailByApintmentId(int apointmentId)
-        { 
+        {
             var result = new DataServiceResult<List<ReferalEventDetail>>();
             try
             {
@@ -288,12 +280,12 @@ namespace KitelyTechWebApi.Controllers
             return JsonConvert.SerializeObject(result);
         }
         [HttpPost]
-        public string SaveEventsDetail(ReferalEventDetail model,int siteId,int studyId)
+        public string SaveEventsDetail(ReferalEventDetail model, int siteId, int studyId)
         {
             var result = new DataServiceResult<ReferalEventDetail>();
             try
             {
-                
+
                 if (model != null)
                 {
 
@@ -322,7 +314,7 @@ namespace KitelyTechWebApi.Controllers
                         result.Success = false;
                         result.ResultMessage = "Referal id is required";
                     }
-                    
+
                     else
                     {
                         model.CreatedOn = DateTime.Now.Date;
@@ -421,6 +413,6 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
-      
+
     }
 }
