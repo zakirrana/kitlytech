@@ -1,4 +1,5 @@
-﻿using Core.Domain.Models;
+﻿using Core.Domain.Common;
+using Core.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,151 +23,121 @@ namespace Core.Domain.Repository.SiteRepository
             return this.istudyobject.GetModel();
         }
 
-        public List<StudyModel> GeStudiesBySiteId(int siteId, string search, int from, int to)
+        public List<StudyModel> GeStudiesBySiteId(SiteApiParameter param)
         {
-            List<StudyModel> result = new List<StudyModel>();
-            var data = dbContext.sp_site_GetStudiesBySiteId(siteId, search, from, to).ToList();
-            if (data != null && data.Count > 0)
-            {
-                foreach (var value in data)
-                {
-                    StudyModel objstudy = new StudyModel();
-                    objstudy.Id = value.Id;
-                    objstudy.StudyTitle = value.StudyTitle;
-                    objstudy.Status = value.Status;
-                    objstudy.StatusId = value.StatusId ?? 0;
-                    objstudy.StudyCode = value.StudyCode;
-                    objstudy.Audit.CreatedBy = value.CreatedBy;
-                    objstudy.Audit.CreatedOn = value.CreatedOn;
-                    objstudy.Audit.ModifiedOn = value.ModifiedOn;
-                    objstudy.Audit.ModyfiedBy = value.ModyfiedBy;
-                    result.Add(objstudy);
 
-                }
-            }
-            return result;
+
+            var Result = dbContext.sp_site_GetStudiesBySiteId(param.siteId, param.search, param.fromRecord,param.toRecord).Select(value => new StudyModel
+            {
+                Id = value.Id,
+                StudyTitle = value.StudyTitle,
+                Status = value.Status,
+                StatusId = value.StatusId ?? 0,
+                StudyCode = value.StudyCode,
+
+
+            }).ToList();
+
+
+            return Result;
 
 
         }
-       
-        public List<ReferalModel> GeReferalByStudyId(int siteId, int studyId, string search, int from, int to)
-        {
-            List<ReferalModel> result = new List<ReferalModel>();
-            var data = dbContext.sp_site_GetReferalsByStudyId(siteId, studyId, search, from, to).ToList();
-            if (data != null && data.Count > 0)
-            {
-                foreach (var value in data)
-                {
-                    ReferalModel objref = new ReferalModel();
-                    objref.ReferalId = value.RefrelId ?? 0;
-                    objref.ReferalCode = value.ReferalCode;
-                    objref.SiteId = value.SiteId ?? 0;
-                    objref.Status = value.ReferalStatus;
-                    objref.StatusId = value.ReferalStatusId ?? 0;
-                    objref.StudyId = value.StudyId ?? 0;
-                    result.Add(objref);
 
-                }
-            }
-            return result;
+        public List<ReferalModel> GeReferalByStudyId(SiteApiParameter param)
+        {
+
+            var data = dbContext.sp_site_GetReferalsByStudyId(param.siteId, param.studyId, param.search, param.fromRecord, param.toRecord)
+                .Select(value => new ReferalModel
+                {
+                    ReferalId = value.RefrelId ?? 0,
+                    ReferalCode = value.ReferalCode,
+                    SiteId = value.SiteId ?? 0,
+                    Status = value.ReferalStatus,
+                    StatusId = value.ReferalStatusId ?? 0,
+                    StudyId = value.StudyId ?? 0,
+
+                }).ToList();
+
+            return data;
 
 
         }
         public ReferalModel GetReferalDetail(int referalId, int studyId)
         {
-            ReferalModel result = new ReferalModel();
-            var data = dbContext.sp_site_GetReferalsDetail(referalId, studyId).FirstOrDefault();
-            if (data != null)
+
+            var result = dbContext.sp_site_GetReferalsDetail(referalId, studyId).Select(data => new ReferalModel
             {
 
-                ReferalModel objref = new ReferalModel();
-                objref.ReferalId = data.Id;
-                objref.StudyId = data.StudyId ?? 0;
-                objref.SiteId = data.SiteId??0;
-                objref.ReferalCode = data.ReferalCode;
-                objref.FirstName = data.FirstName;
-                objref.MiddleName = data.MiddleName;
-                objref.LastName = data.LastName;
-                objref.HomePhoneNumber = data.HomePhoneNumber;
-                objref.State = data.State;
-                objref.Zip = data.Zip;
-                objref.EmailAddress = data.EmailAddress;
-                objref.Country = data.Country;
-                objref.City = data.City;
-                objref.CellPhoneNumber = data.CellPhoneNumber;
-                objref.CareGiversName = data.CareGiversName;
-                objref.CareGiverrsPhone = data.CareGiverrsPhone;
-                objref.Address = data.Address;
-                objref.Status = data.ReferalStatus;
+                ReferalId = data.Id,
+                SiteId = data.SiteId ?? 0,
+                ReferalCode = data.ReferalCode,
+                FirstName = data.FirstName,
+                MiddleName = data.MiddleName,
+                LastName = data.LastName,
+                HomePhoneNumber = data.HomePhoneNumber,
+                State = data.State,
+                Zip = data.Zip,
+                EmailAddress = data.EmailAddress,
+                Country = data.Country,
+                City = data.City,
+                CellPhoneNumber = data.CellPhoneNumber,
+                CareGiversName = data.CareGiversName,
+                CareGiverrsPhone = data.CareGiverrsPhone,
+                Address = data.Address,
+                Status = data.ReferalStatus,
+            }).FirstOrDefault();
 
-                result = objref;
-
-
-            }
             return result;
 
 
         }
         public List<AppointmentType> GetApintMentTypeCombo()
         {
-            List<AppointmentType> result = new List<AppointmentType>();
-            var data = dbContext.ReferalApointmentTypes.AsNoTracking().ToList();
-            if (data != null && data.Count > 0)
-            {
-                foreach (var value in data)
-                {
-                    AppointmentType objetype = new AppointmentType();
-                    objetype.Id = value.Id;
-                    objetype.Type = value.ApointMentType;
-                    result.Add(objetype);
 
-                }
-            }
+            var result = dbContext.ReferalApointmentTypes.AsNoTracking().Select(value => new AppointmentType
+            {
+                Id = value.Id,
+                Type = value.ApointMentType
+            }).ToList();
+
             return result;
 
 
         }
         public List<AppointmentDetail> GetApintMentDetail(int ReferalId)
         {
-            List<AppointmentDetail> result = new List<AppointmentDetail>();
-            var data = dbContext.sp_site_GetReferalsApointments(ReferalId).ToList();
-            if (data != null && data.Count > 0)
-            {
-                foreach (var value in data)
-                {
-                    AppointmentDetail objapt = new AppointmentDetail();
-                    objapt.Id = value.Id;
-                    objapt.referalId = value.ReferalId??0;
-                    objapt.ApintMentTypeId = value.AppointmentTypeId ?? 0;
-                    objapt.ApointMentType = value.ApointMentType;
-                    objapt.Date = value.ApointmentDate;
-                    objapt.CreatedOn = value.CreatedOn;
-                    objapt.Notes = value.Note;
-                    objapt.EventId = value.EventId??0;
-                    result.Add(objapt);
 
-                }
-            }
+            var result = dbContext.sp_site_GetReferalsApointments(ReferalId)
+                .Select(value => new AppointmentDetail
+                {
+                    Id = value.Id,
+                    referalId = value.ReferalId ?? 0,
+                    ApintMentTypeId = value.AppointmentTypeId ?? 0,
+                    ApointMentType = value.ApointMentType,
+                    Date = value.ApointmentDate,
+                    CreatedOn = value.CreatedOn,
+                    Notes = value.Note,
+                    EventId = value.EventId ?? 0
+                }).ToList();
+
             return result;
 
 
         }
         public AppointmentDetail GetApintMentDetailById(int Id)
         {
-            AppointmentDetail result = new AppointmentDetail();
-            var value = dbContext.ReferalApointments.AsNoTracking().Where(x=>x.Id==Id).FirstOrDefault();
-            if (value != null)
+            var result = dbContext.ReferalApointments.AsNoTracking().Where(x => x.Id == Id).Select(value => new AppointmentDetail
             {
-                result.Id = value.Id;
-                result.referalId = value.ReferalId ?? 0;
-                result.ApintMentTypeId = value.AppointmentTypeId ?? 0;
-                result.Date = value.ApointmentDate;
-                result.CreatedOn = value.CreatedOn;
-                result.Notes = value.Note;
-            }
+                Id = value.Id,
+                referalId = value.ReferalId ?? 0,
+                ApintMentTypeId = value.AppointmentTypeId ?? 0,
+                Date = value.ApointmentDate,
+                CreatedOn = value.CreatedOn,
+                Notes = value.Note
+            }).FirstOrDefault();
+
             return result;
-
-
         }
         public void SaveApointMent(ReferalApointment model)
         {
@@ -178,7 +149,7 @@ namespace Core.Domain.Repository.SiteRepository
             else
             {
                 repo.UpdateModel(model);
-               
+
             }
             repo.Save();
         }
@@ -189,45 +160,41 @@ namespace Core.Domain.Repository.SiteRepository
             {
                 repo.DeleteModel(Id);
             }
-           
+
             repo.Save();
         }
         public List<EventDetails> GetEventDetail(int ReferalId)
         {
-            List<EventDetails> result = new List<EventDetails>();
-            var data = dbContext.sp_site_GetReferalsEvents(ReferalId).ToList();
-            if (data != null && data.Count > 0)
-            {
-                foreach (var value in data)
-                {
-                    EventDetails objevt = new EventDetails();
-                    objevt.Id = value.Id;
-                    objevt.ApplicableProtocolid = value.ApplicableProtocolid??0;
-                    objevt.Comment = value.Comment;
-                    objevt.CreatedOn = value.CreatedOn;
-                    objevt.EventDate = value.EventDate;
-                    objevt.EventStatus = value.EventStatus;
-                    objevt.EventStatusId = value.EventStatusId??0;
-                    objevt.EventTypeId = value.EventTypeId;
-                    objevt.EventType = value.EventType;
-                    objevt.IVRNo = value.IVRNo;
-                    objevt.ReferalId = value.ReferalId??0;
-                    objevt.ReferalStatusId = value.ReferalStatusId ?? 0;
-                    objevt.ReferalStatus = value.ReferalStatus;
-                    
-                    result.Add(objevt);
 
-                }
-            }
+            var result = dbContext.sp_site_GetReferalsEvents(ReferalId)
+                .Select(value => new EventDetails
+                {
+                    Id = value.Id,
+                    ApplicableProtocolid = value.ApplicableProtocolid ?? 0,
+                    Comment = value.Comment,
+                    CreatedOn = value.CreatedOn,
+                    EventDate = value.EventDate,
+                    EventStatus = value.EventStatus,
+                    EventStatusId = value.EventStatusId ?? 0,
+                    EventTypeId = value.EventTypeId,
+                    EventType = value.EventType,
+                    IVRNo = value.IVRNo,
+                    ReferalId = value.ReferalId ?? 0,
+                    ReferalStatusId = value.ReferalStatusId ?? 0,
+                    ReferalStatus = value.ReferalStatus
+
+
+                }).ToList();
+
             return result;
 
 
         }
         public ReferalEventDetail GetEventDetailById(int Id)
         {
-           
-            return dbContext.ReferalEventDetails.AsNoTracking().Where(row=>row.Id==Id).FirstOrDefault();
-           
+
+            return dbContext.ReferalEventDetails.AsNoTracking().Where(row => row.Id == Id).FirstOrDefault();
+
 
         }
         public List<ReferalEventDetail> GetEventDetailByApintmentId(int apointmentId)
@@ -251,7 +218,7 @@ namespace Core.Domain.Repository.SiteRepository
             }
             repo.Save();
             var value = dbContext.StudySiteReferalMappings.AsNoTracking().Where(row => row.RefrelId == model.ReferalId && row.SiteId == siteId && row.StudyId == studyId).FirstOrDefault();
-            if(value!=null)
+            if (value != null)
             {
                 value.ReferalStatusId = model.ReferalStatusId;
                 dbContext.Entry(value).State = System.Data.Entity.EntityState.Modified;
@@ -268,10 +235,9 @@ namespace Core.Domain.Repository.SiteRepository
 
             repo.Save();
         }
-
         public EventsCombo GetEventsCombo()
         {
-           
+
             var eventcombos = new EventsCombo();
             eventcombos.referalStatus = dbContext.ReferalStatus.AsNoTracking().ToList();
             eventcombos.referalStatusReson = dbContext.SiteReferalStatusReasons.AsNoTracking().ToList();
@@ -283,12 +249,8 @@ namespace Core.Domain.Repository.SiteRepository
 
         public List<StudyProtocol> GetApplicableProtocol(int studyId)
         {
-            return dbContext.StudyProtocols.AsNoTracking().Where(row=>row.StudyId==studyId).ToList();
+            return dbContext.StudyProtocols.AsNoTracking().Where(row => row.StudyId == studyId).ToList();
         }
-
-       
-
-
 
     }
 }

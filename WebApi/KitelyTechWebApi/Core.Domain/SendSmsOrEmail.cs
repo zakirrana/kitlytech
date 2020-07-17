@@ -25,5 +25,6 @@ namespace Core.Domain
         public Nullable<bool> isMessagesent { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public string Subject { get; set; }
     }
 }

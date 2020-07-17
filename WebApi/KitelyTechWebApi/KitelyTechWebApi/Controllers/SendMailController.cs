@@ -29,6 +29,7 @@ namespace KitelyTechWebApi.Controllers
                 data.MessageDate = DateTime.Now.Date;
                 data.MessgeType = mail.MessageType;
                 data.To = mail.to;
+                data.Subject = mail.subject;
                 data.From = mail.from;
                 data.MessageReciver = mail.reciver;
                 emailrepo.SaveEmailSMSEntry(data);

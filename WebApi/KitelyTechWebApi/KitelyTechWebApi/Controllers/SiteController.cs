@@ -1,6 +1,8 @@
 ﻿using Core.Domain;
+using Core.Domain.Common;
 using Core.Domain.Models;
 using Core.Domain.Repository.SiteRepository;
+using KitelyTechWebApi.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,19 +14,20 @@ using System.Web.Http;
 
 namespace KitelyTechWebApi.Controllers
 {
+    [CustomExceptionFilter]
     public class SiteController : ApiController
     {
         private SiteRepository siterepo = new SiteRepository();
  
 
-        public string GetStudiesBySite(int siteId, string search, int from, int to)
+        public string GetStudiesBySite(SiteApiParameter model)
         {
 
-
+           
             var result = new DataServiceResult<List<StudyModel>>();
             try
             {
-                var data = siterepo.GeStudiesBySiteId(siteId, search, from, to);
+                var data = siterepo.GeStudiesBySiteId(model);
                 if (data != null)
                 {
                     result.Success = true;
@@ -40,14 +43,12 @@ namespace KitelyTechWebApi.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
-        public string GetReferalsByStudy(int siteId, int studyId, string search, int from, int to)
+        public string GetReferalsByStudy(SiteApiParameter model)
         {
-
-
             var result = new DataServiceResult<List<ReferalModel>>();
             try
             {
-                var data = siterepo.GeReferalByStudyId(siteId, studyId, search, from, to);
+                var data = siterepo.GeReferalByStudyId(model);
                 if (data != null)
                 {
                     result.Success = true;
@@ -153,7 +154,7 @@ namespace KitelyTechWebApi.Controllers
             var result = new DataServiceResult<ReferalApointment>();
             try
             {
-               
+               //ToDo:Model state check
                     //JsonConvert.DeserializeObject<ReferalApointment>(model.ToString());
                 if (model != null)
                 {

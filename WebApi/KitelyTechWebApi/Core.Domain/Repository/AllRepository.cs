@@ -44,8 +44,7 @@ namespace Core.Domain.Repository
             _context.SaveChanges();
         }
 
-        public void UpdateModel(T model)
-        {
+        public void UpdateModel(T model)        {
             
             _context.Entry(model).State = System.Data.Entity.EntityState.Modified;
         }

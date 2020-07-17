@@ -276,6 +276,7 @@
     <EntitySetMapping Name="SendSmsOrEmails">
       <EntityTypeMapping TypeName="CTMModel.SendSmsOrEmail">
         <MappingFragment StoreEntitySet="SendSmsOrEmail">
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="isMessagesent" ColumnName="isMessagesent" />

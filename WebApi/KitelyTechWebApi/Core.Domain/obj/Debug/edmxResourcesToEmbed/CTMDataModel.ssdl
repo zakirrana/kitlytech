@@ -106,6 +106,7 @@
     <Property Name="MessageReciver" Type="nvarchar" MaxLength="500" />
     <Property Name="From" Type="nvarchar" MaxLength="200" />
     <Property Name="To" Type="nvarchar(max)" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="500" />
     <Property Name="MessgeType" Type="int" />
     <Property Name="MessageDate" Type="datetime" />
     <Property Name="MessageContent" Type="nvarchar(max)" />
