@@ -11,16 +11,22 @@ namespace Core.Domain
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class ReferalEventDetail
     {
         public int Id { get; set; }
+        [Required]
         public int EventTypeId { get; set; }
+        [Required]
         public Nullable<System.DateTime> EventDate { get; set; }
         public string Comment { get; set; }
+        [Required]
         public Nullable<int> ReferalStatusId { get; set; }
+        [Required]
         public Nullable<int> EventStatusId { get; set; }
         public string IVRNo { get; set; }
+        [Required]
         public Nullable<int> ReferalId { get; set; }
         public Nullable<int> ApplicableProtocolid { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }

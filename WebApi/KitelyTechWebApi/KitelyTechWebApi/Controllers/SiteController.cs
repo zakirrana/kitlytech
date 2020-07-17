@@ -286,49 +286,18 @@ namespace KitelyTechWebApi.Controllers
             try
             {
 
-                if (model != null)
-                {
-
-                    if (model.EventTypeId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Event type is required";
-                    }
-                    else if (model.EventStatusId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Event status is required";
-                    }
-                    else if (model.EventDate == null)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Event date is required";
-                    }
-                    else if (model.ReferalStatusId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Refere status is required";
-                    }
-                    else if (model.ReferalId == 0)
-                    {
-                        result.Success = false;
-                        result.ResultMessage = "Referal id is required";
-                    }
-
-                    else
-                    {
+                if (ModelState.IsValid)
+                {                   
                         model.CreatedOn = DateTime.Now.Date;
                         siterepo.SaveEvents(model, siteId, studyId);
-
                         result.Success = true;
-                        result.Value = model;
-                    }
+                        result.Value = model;                    
                 }
                 else
                 {
-
                     result.Success = false;
-                    result.ResultMessage = "model is null";
+                    result.ResultMessage = "model is not valid";
+                    result.errors = ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage));
                 }
 
 
