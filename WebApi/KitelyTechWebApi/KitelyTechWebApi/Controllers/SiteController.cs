@@ -300,8 +300,6 @@ namespace KitelyTechWebApi.Controllers
                     result.errors = ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage));
                 }
 
-
-
             }
             catch (Exception ex)
             {
