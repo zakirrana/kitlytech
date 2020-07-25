@@ -38,6 +38,7 @@
     <Property Name="Note" Type="nvarchar(max)" />
     <Property Name="ReferalId" Type="int" />
     <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="isDeleted" Type="bit" />
   </EntityType>
   <EntityType Name="ReferalApointmentType">
     <Key>
@@ -62,6 +63,7 @@
     <Property Name="CreatedOn" Type="datetime" />
     <Property Name="ReferalStatusResonId" Type="int" />
     <Property Name="ApointMentId" Type="int" />
+    <Property Name="isDeleted" Type="bit" />
   </EntityType>
   <EntityType Name="ReferalEventStatus">
     <Key>

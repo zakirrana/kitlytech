@@ -179,6 +179,7 @@
     <Property Name="ReferalId" Type="Int32" />
     <Property Name="CreatedOn" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PatientReferalMapping" Relationship="CTMModel.FK_ReferalApointments_PatientReferalMapping" FromRole="ReferalApointment" ToRole="PatientReferalMapping" />
+    <Property Name="isDeleted" Type="Boolean" />
   </EntityType>
   <EntityType Name="ReferalApointmentType">
     <Key>
@@ -205,6 +206,7 @@
     <NavigationProperty Name="ReferalEventType" Relationship="CTMModel.FK_SiteEventDetail_SiteEventType" FromRole="ReferalEventDetail" ToRole="ReferalEventType" />
     <Property Name="ReferalStatusResonId" Type="Int32" />
     <Property Name="ApointMentId" Type="Int32" />
+    <Property Name="isDeleted" Type="Boolean" />
   </EntityType>
   <EntityType Name="ReferalEventStatu">
     <Key>

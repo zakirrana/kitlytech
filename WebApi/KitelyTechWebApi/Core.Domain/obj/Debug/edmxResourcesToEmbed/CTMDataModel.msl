@@ -103,6 +103,7 @@
     <EntitySetMapping Name="ReferalApointments">
       <EntityTypeMapping TypeName="CTMModel.ReferalApointment">
         <MappingFragment StoreEntitySet="ReferalApointments">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="ReferalId" ColumnName="ReferalId" />
           <ScalarProperty Name="Note" ColumnName="Note" />
@@ -123,6 +124,7 @@
     <EntitySetMapping Name="ReferalEventDetails">
       <EntityTypeMapping TypeName="CTMModel.ReferalEventDetail">
         <MappingFragment StoreEntitySet="ReferalEventDetail">
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
           <ScalarProperty Name="ApointMentId" ColumnName="ApointMentId" />
           <ScalarProperty Name="ReferalStatusResonId" ColumnName="ReferalStatusResonId" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

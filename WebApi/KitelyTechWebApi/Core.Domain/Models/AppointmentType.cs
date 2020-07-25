@@ -27,6 +27,6 @@ namespace Core.Domain.Models
     public class StudyProtocol
     {
         public int Id { get; set; }
-        public string protocall { get; set; }
+        public string Protocall { get; set; }
     }
 }

@@ -25,13 +25,13 @@ namespace KitelyTechWebApi.Controllers
 
                 EmailHelper.Send(mail);
                 var data = new SendSmsOrEmail();
-                data.MessageContent = mail.emailBody;
+                data.MessageContent = mail.EmailBody;
                 data.MessageDate = DateTime.Now.Date;
                 data.MessgeType = mail.MessageType;
-                data.To = mail.to;
-                data.Subject = mail.subject;
-                data.From = mail.from;
-                data.MessageReciver = mail.reciver;
+                data.To = mail.To;
+                data.Subject = mail.Subject;
+                data.From = mail.From;
+                data.MessageReciver = mail.Reciver;
                 emailrepo.SaveEmailSMSEntry(data);
                 result.Success = true;
                 result.ResultMessage = "Mail send successfully";

@@ -29,15 +29,15 @@ namespace Core.Domain.Utility
             {
                 MailMessage message = new MailMessage();
                 SmtpClient smtpclient = new SmtpClient();
-                message.From = new MailAddress(email.from);
-                foreach (var to in email.to.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+                message.From = new MailAddress(email.From);
+                foreach (var to in email.To.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     message.To.Add(new MailAddress(to));
                 }
 
-                message.Subject = email.subject;
-                message.IsBodyHtml = email.isHtml; //to make message body as html  
-                message.Body = email.emailBody;
+                message.Subject = email.Subject;
+                message.IsBodyHtml = email.IsHtml; //to make message body as html  
+                message.Body = email.EmailBody;
                 smtpclient.Port = Convert.ToInt32(port);
                 smtpclient.Host = smtp; //for gmail host  
                 smtpclient.EnableSsl = true;

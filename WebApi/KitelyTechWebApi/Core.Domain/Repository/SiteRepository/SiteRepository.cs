@@ -27,7 +27,7 @@ namespace Core.Domain.Repository.SiteRepository
         {
 
 
-            var Result = dbContext.sp_site_GetStudiesBySiteId(param.siteId, param.search, param.fromRecord,param.toRecord).Select(value => new StudyModel
+            var Result = dbContext.sp_site_GetStudiesBySiteId(param.SiteId, param.Search, param.FromRecord,param.ToRecord).Select(value => new StudyModel
             {
                 Id = value.Id,
                 StudyTitle = value.StudyTitle,
@@ -47,7 +47,7 @@ namespace Core.Domain.Repository.SiteRepository
         public List<ReferalModel> GeReferalByStudyId(SiteApiParameter param)
         {
 
-            var data = dbContext.sp_site_GetReferalsByStudyId(param.siteId, param.studyId, param.search, param.fromRecord, param.toRecord)
+            var data = dbContext.sp_site_GetReferalsByStudyId(param.SiteId, param.StudyId, param.Search, param.FromRecord, param.ToRecord)
                 .Select(value => new ReferalModel
                 {
                     ReferalId = value.RefrelId ?? 0,
@@ -105,14 +105,14 @@ namespace Core.Domain.Repository.SiteRepository
 
 
         }
-        public List<AppointmentDetail> GetApintMentDetail(int ReferalId)
+        public List<AppointmentDetail> GetApintMentDetail(int referalId)
         {
 
-            var result = dbContext.sp_site_GetReferalsApointments(ReferalId)
+            var result = dbContext.sp_site_GetReferalsApointments(referalId)
                 .Select(value => new AppointmentDetail
                 {
                     Id = value.Id,
-                    referalId = value.ReferalId ?? 0,
+                    ReferalId = value.ReferalId ?? 0,
                     ApintMentTypeId = value.AppointmentTypeId ?? 0,
                     ApointMentType = value.ApointMentType,
                     Date = value.ApointmentDate,
@@ -130,7 +130,7 @@ namespace Core.Domain.Repository.SiteRepository
             var result = dbContext.ReferalApointments.AsNoTracking().Where(x => x.Id == Id).Select(value => new AppointmentDetail
             {
                 Id = value.Id,
-                referalId = value.ReferalId ?? 0,
+                ReferalId = value.ReferalId ?? 0,
                 ApintMentTypeId = value.AppointmentTypeId ?? 0,
                 Date = value.ApointmentDate,
                 CreatedOn = value.CreatedOn,
@@ -158,15 +158,18 @@ namespace Core.Domain.Repository.SiteRepository
             var repo = new AllRepository<ReferalApointment>();
             if (Id > 0)
             {
-                repo.DeleteModel(Id);
+                var data = dbContext.ReferalApointments.Where(row => row.Id == Id).FirstOrDefault();
+                data.isDeleted = true;
+                repo.UpdateModel(data);
+                repo.Save();
             }
 
-            repo.Save();
+           
         }
-        public List<EventDetails> GetEventDetail(int ReferalId)
+        public List<EventDetails> GetEventDetail(int referalId)
         {
 
-            var result = dbContext.sp_site_GetReferalsEvents(ReferalId)
+            var result = dbContext.sp_site_GetReferalsEvents(referalId)
                 .Select(value => new EventDetails
                 {
                     Id = value.Id,
@@ -230,19 +233,22 @@ namespace Core.Domain.Repository.SiteRepository
             var repo = new AllRepository<ReferalEventDetail>();
             if (Id > 0)
             {
-                repo.DeleteModel(Id);
+                var data = dbContext.ReferalEventDetails.Where(row => row.Id == Id).FirstOrDefault();
+                data.isDeleted = true;
+                repo.UpdateModel(data);
+                repo.Save();
             }
 
-            repo.Save();
+           
         }
         public EventsCombo GetEventsCombo()
         {
 
             var eventcombos = new EventsCombo();
-            eventcombos.referalStatus = dbContext.ReferalStatus.AsNoTracking().ToList();
-            eventcombos.referalStatusReson = dbContext.SiteReferalStatusReasons.AsNoTracking().ToList();
-            eventcombos.eventTypes = dbContext.ReferalEventTypes.AsNoTracking().ToList();
-            eventcombos.referalEventStatus = dbContext.ReferalEventStatus.AsNoTracking().ToList();
+            eventcombos.ReferalStatus = dbContext.ReferalStatus.AsNoTracking().ToList();
+            eventcombos.ReferalStatusReson = dbContext.SiteReferalStatusReasons.AsNoTracking().ToList();
+            eventcombos.EventTypes = dbContext.ReferalEventTypes.AsNoTracking().ToList();
+            eventcombos.ReferalEventStatus = dbContext.ReferalEventStatus.AsNoTracking().ToList();
             return eventcombos;
 
         }

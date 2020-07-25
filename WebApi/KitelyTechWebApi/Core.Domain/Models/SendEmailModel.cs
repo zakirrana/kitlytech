@@ -9,14 +9,14 @@ namespace Core.Domain.Models
     public class SendEmailModel
     {
 
-        public string to { get; set; }
-        public string from { get; set; }
-        public string emailBody { get; set; }
+        public string To { get; set; }
+        public string From { get; set; }
+        public string EmailBody { get; set; }
         public int MessageType { get; set; }
-        public string subject { get; set; }
-        public string bcc { get; set; }
-        public string cc { get; set; }
-        public bool isHtml { get; set; }
-        public string reciver { get; set; }
+        public string Subject { get; set; }
+        public string Bcc { get; set; }
+        public string Cc { get; set; }
+        public bool IsHtml { get; set; }
+        public string Reciver { get; set; }
     }
 }

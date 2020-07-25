@@ -11,15 +11,15 @@ namespace Core.Domain.Models
 
         public EventsCombo()
         {
-            eventTypes = new List<ReferalEventType>();
-            referalStatus = new List<ReferalStatu>();
-            referalStatusReson = new List<SiteReferalStatusReason>();
-            referalEventStatus = new List<ReferalEventStatu>();
+            EventTypes = new List<ReferalEventType>();
+            ReferalStatus = new List<ReferalStatu>();
+            ReferalStatusReson = new List<SiteReferalStatusReason>();
+            ReferalEventStatus = new List<ReferalEventStatu>();
         }
-        public List<ReferalEventType> eventTypes { get; set; }
-        public List<ReferalStatu> referalStatus { get; set; }
-        public List<SiteReferalStatusReason> referalStatusReson { get; set; }
+        public List<ReferalEventType> EventTypes { get; set; }
+        public List<ReferalStatu> ReferalStatus { get; set; }
+        public List<SiteReferalStatusReason> ReferalStatusReson { get; set; }
 
-        public List<ReferalEventStatu> referalEventStatus { get; set; }
+        public List<ReferalEventStatu> ReferalEventStatus { get; set; }
     }
 }
